@@ -21,8 +21,4 @@ public abstract class PieceAbstract implements Piece{
         return side;
     }
 
-    @Override
-    public void move(Coordinate coordinate) {
-        this.coordinate = coordinate;
-    }
 }

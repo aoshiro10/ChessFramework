@@ -6,7 +6,7 @@ public interface Piece {
 
     void move(Coordinate coordinate);
     Coordinate getCoordinate();
-    List<Coordinate> getAvailableMoves();
+    List<Coordinate> getAvailableMoves(boolean check);
     Side getSide();
 
 }

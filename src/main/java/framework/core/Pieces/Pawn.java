@@ -1,14 +1,13 @@
 package framework.core.Pieces;
 
-import framework.core.Coordinate;
-import framework.core.Piece;
-import framework.core.PieceAbstract;
-import framework.core.Side;
+import framework.core.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends PieceAbstract implements Piece {
+
+    private boolean initPos = true;
 
     public Pawn(Side side, Coordinate coordinate) {
         super(side, coordinate);
@@ -16,12 +15,42 @@ public class Pawn extends PieceAbstract implements Piece {
 
 
     @Override
-    public List<Coordinate> getAvailableMoves() {
+    public List<Coordinate> getAvailableMoves(boolean check) {
 
-        List<Coordinate> moves = new ArrayList<>();
+        if (check) {
+            return getCheckMoves();
+        }
+
+        return getNonCheckMoves();
+
+    }
+
+    private List<Coordinate> getCheckMoves() {
+        List<Coordinate> moves = getNonCheckMoves();
+
+
 
         return moves;
+    }
 
+    private List<Coordinate> getNonCheckMoves() {
+        List<Coordinate> moves = new ArrayList<>();
+
+        if (initPos) {
+            //checking for double jump
+        }
+
+        //checking for vertical move
+
+        //checking for diagonal move
+
+        return moves;
+    }
+
+
+    @Override
+    public void move(Coordinate coordinate) {
+        initPos = false;
     }
 }
 

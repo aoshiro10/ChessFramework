@@ -1,37 +1,57 @@
 package framework.core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public final class Board {
 
-    private Piece[][] board;
     private final int rows = 8;
     private final int cols = 8;
+    private HashMap<Coordinate, Piece> board;
 
     public Board() {
-        board = new Piece[8][];
-        for (int row = 0; row < rows; row++) {
-            board[row] = new Piece[8];
-            for (int col = 0; col < cols; col++){
-                board[row][col] = null;
-            }
-        }
+        initBoard();
     }
 
+
+    //TODO isCheck
+    public boolean isCheck(Side side) {
+
+        return false;
+
+
+    }
+
+
+    public Board(Board oldBoard) {
+
+    }
+
+    private void initBoard() {
+
+        //TODO build initial board
+
+    }
+
+
     List<Piece> getPieces() {
-
         List<Piece> pieces = new ArrayList<>();
+        for (Coordinate coordinate : board.keySet()) {
+            Piece piece = board.get(coordinate);
+            pieces.add(piece);
+        }
+        return pieces;
+    }
 
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                Piece piece = getPiece(new Coordinate(row, col));
-                if (piece != null) {
-                    pieces.add(piece);
-                }
+    List<Piece> getSidePieces(Side side) {
+        List<Piece> pieces = new ArrayList<>();
+        for (Coordinate coordinate : board.keySet()) {
+            Piece piece = board.get(coordinate);
+            if (piece.getSide() == side){
+                pieces.add(piece);
             }
         }
-
         return pieces;
     }
 
@@ -54,11 +74,10 @@ public final class Board {
 
 
     private Piece getPiece(Coordinate coordinate) {
-        int row = coordinate.getRow();
-        int col = coordinate.getCol();
-        return board[row][col];
-
+        return board.getOrDefault(coordinate, null);
     }
+
+
 
 
 }
