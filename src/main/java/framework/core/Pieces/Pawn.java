@@ -15,36 +15,38 @@ public class Pawn extends PieceAbstract implements Piece {
 
 
     @Override
-    public List<Coordinate> getAvailableMoves(boolean check) {
+    public List<Coordinate> getAvailableMoves() {
 
-        if (check) {
-            return getCheckMoves();
-        }
-
-        return getNonCheckMoves();
-
-    }
-
-    private List<Coordinate> getCheckMoves() {
-        List<Coordinate> moves = getNonCheckMoves();
-
-
-
-        return moves;
-    }
-
-    private List<Coordinate> getNonCheckMoves() {
         List<Coordinate> moves = new ArrayList<>();
+
+        int currentRow = this.getCoordinate().getRow();
+        int currentCol = this.getCoordinate().getCol();
+
+
+        int sideMult = 1;
+        if (getSide() == Side.White) {
+            sideMult = -1;
+        }
 
         if (initPos) {
             //checking for double jump
+            Coordinate coordinate1 = new Coordinate(currentRow - (2*sideMult), currentCol);
+            moves.add(coordinate1);
         }
 
         //checking for vertical move
+        Coordinate coordinate2 = new Coordinate(currentRow - (1*sideMult), currentCol);
+        moves.add(coordinate2);
+
 
         //checking for diagonal move
+        Coordinate coordinate3 = new Coordinate(currentRow - (1*sideMult), currentCol + 1);
+        Coordinate coordinate4 = new Coordinate(currentRow - (1*sideMult), currentCol - 1);
+        moves.add(coordinate3);
+        moves.add(coordinate4);
 
         return moves;
+
     }
 
 

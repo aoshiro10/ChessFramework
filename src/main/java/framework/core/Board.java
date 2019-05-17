@@ -8,11 +8,15 @@ public final class Board {
 
     private final int rows = 8;
     private final int cols = 8;
-    private HashMap<Coordinate, Piece> board;
+    private List<Piece> board;
+
+//    private final Piece blackKing;
+//    private final Piece whiteKing;
 
     public Board() {
         initBoard();
     }
+
 
 
     //TODO isCheck
@@ -20,12 +24,15 @@ public final class Board {
 
         return false;
 
-
     }
 
 
-    public Board(Board oldBoard) {
 
+    public Board(Board oldBoard) {
+//        this.blackKing = oldBoard.blackKing;
+//        this.whiteKing = oldBoard.whiteKing;
+        this.board = new ArrayList<>();
+        //TODO init and put pieces
     }
 
     private void initBoard() {
@@ -36,33 +43,19 @@ public final class Board {
 
 
     List<Piece> getPieces() {
-        List<Piece> pieces = new ArrayList<>();
-        for (Coordinate coordinate : board.keySet()) {
-            Piece piece = board.get(coordinate);
-            pieces.add(piece);
-        }
-        return pieces;
-    }
-
-    List<Piece> getSidePieces(Side side) {
-        List<Piece> pieces = new ArrayList<>();
-        for (Coordinate coordinate : board.keySet()) {
-            Piece piece = board.get(coordinate);
-            if (piece.getSide() == side){
-                pieces.add(piece);
-            }
-        }
-        return pieces;
+        return board;
     }
 
 
-    boolean isValid(Piece piece, Coordinate coordinate) {
+
+
+    boolean isValid(Side side, Coordinate coordinate) {
         if (!inBounds(coordinate)){
             return false;
         }
 
         Piece movePiece = getPiece(coordinate);
-        return (movePiece == null) || (movePiece.getSide() != piece.getSide());
+        return (movePiece == null) || (movePiece.getSide() != side);
 
     }
 
@@ -74,8 +67,17 @@ public final class Board {
 
 
     private Piece getPiece(Coordinate coordinate) {
-        return board.getOrDefault(coordinate, null);
+
+        for (Piece piece : board) {
+            if (piece.getCoordinate().equals(coordinate)) {
+                return piece;
+            }
+        }
+
+        return null;
     }
+
+
 
 
 
