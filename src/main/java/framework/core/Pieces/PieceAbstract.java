@@ -1,6 +1,9 @@
-package framework.core;
+package framework.core.Pieces;
 
-public abstract class PieceAbstract implements Piece{
+import framework.core.Coordinate;
+import framework.core.Side;
+
+public abstract class PieceAbstract implements Piece {
 
     private final Side side;
     private Coordinate coordinate;
@@ -12,9 +15,16 @@ public abstract class PieceAbstract implements Piece{
 
 
     @Override
+    public void move(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
+
+    @Override
     public Coordinate getCoordinate() {
         return coordinate;
     }
+
+
 
     @Override
     public Side getSide() {

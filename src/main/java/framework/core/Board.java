@@ -1,5 +1,7 @@
 package framework.core;
 
+import framework.core.Pieces.Piece;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +10,7 @@ public final class Board {
 
     private final int rows = 8;
     private final int cols = 8;
-    private List<Piece> board;
+    private HashMap<Coordinate, Piece> board;
 
 //    private final Piece blackKing;
 //    private final Piece whiteKing;
@@ -27,11 +29,14 @@ public final class Board {
     }
 
 
+    public static Board getBoard(Board oldBoard, Move move) {
+        return null;
+    }
 
-    public Board(Board oldBoard) {
+    public Board(Board oldBoard, Move move) {
 //        this.blackKing = oldBoard.blackKing;
 //        this.whiteKing = oldBoard.whiteKing;
-        this.board = new ArrayList<>();
+        this.board = new HashMap<>();
         //TODO init and put pieces
     }
 
@@ -42,14 +47,21 @@ public final class Board {
     }
 
 
-    List<Piece> getPieces() {
-        return board;
+    private List<Piece> getPieces() {
+
+        List<Piece> pieces = new ArrayList<>();
+
+        for (Coordinate coordinate : this.board.keySet()) {
+            Piece piece = this.board.get(coordinate);
+            Piece copy = piece.copy();
+            pieces.add(copy);
+        }
+
+        return pieces;
     }
 
 
-
-
-    boolean isValid(Side side, Coordinate coordinate) {
+    private boolean isValidCoordinate(Side side, Coordinate coordinate) {
         if (!inBounds(coordinate)){
             return false;
         }
@@ -67,14 +79,7 @@ public final class Board {
 
 
     private Piece getPiece(Coordinate coordinate) {
-
-        for (Piece piece : board) {
-            if (piece.getCoordinate().equals(coordinate)) {
-                return piece;
-            }
-        }
-
-        return null;
+        return board.getOrDefault(coordinate, null);
     }
 
 

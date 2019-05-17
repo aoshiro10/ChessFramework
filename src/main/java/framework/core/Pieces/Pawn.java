@@ -9,13 +9,15 @@ public class Pawn extends PieceAbstract implements Piece {
 
     private boolean initPos = true;
 
+    private final String name = "Pawn";
+
     public Pawn(Side side, Coordinate coordinate) {
         super(side, coordinate);
     }
 
 
     @Override
-    public List<Coordinate> getAvailableMoves() {
+    public List<Coordinate> getPossibleMoves() {
 
         List<Coordinate> moves = new ArrayList<>();
 
@@ -52,7 +54,20 @@ public class Pawn extends PieceAbstract implements Piece {
 
     @Override
     public void move(Coordinate coordinate) {
+        super.move(coordinate);
         initPos = false;
+    }
+
+    @Override
+    public Piece copy() {
+        Pawn copy = new Pawn(this.getSide(), this.getCoordinate());
+        copy.initPos = this.initPos;
+        return copy;
+    }
+
+    @Override
+    public String toString() {
+        return getSide().toString() +  " " + name;
     }
 }
 

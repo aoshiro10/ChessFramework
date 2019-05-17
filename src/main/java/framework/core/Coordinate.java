@@ -2,7 +2,7 @@ package framework.core;
 
 import static java.util.Objects.hash;
 
-public class Coordinate {
+public final class Coordinate {
 
     private final int row;
     private final int col;
