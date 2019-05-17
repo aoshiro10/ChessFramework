@@ -8,8 +8,8 @@ import java.util.List;
 
 public final class Board {
 
-    private final int rows = 8;
-    private final int cols = 8;
+    private static final int rows = 8;
+    private static final int cols = 8;
     private HashMap<Coordinate, Piece> board;
 
 //    private final Piece blackKing;
@@ -20,6 +20,13 @@ public final class Board {
     }
 
 
+    public static int getCols() {
+        return cols;
+    }
+
+    public static int getRows() {
+        return rows;
+    }
 
     //TODO isCheck
     public boolean isCheck(Side side) {
@@ -74,7 +81,7 @@ public final class Board {
     private boolean inBounds(Coordinate coordinate) {
         int row = coordinate.getRow();
         int col = coordinate.getCol();
-        return (row >= 0) && (row < rows) && (col >= 0) && (col < cols);
+        return (row >= 0) && (row < Board.rows) && (col >= 0) && (col < Board.cols);
     }
 
 
