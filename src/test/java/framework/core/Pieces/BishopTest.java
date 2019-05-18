@@ -2,11 +2,13 @@ package framework.core.Pieces;
 
 import framework.core.Board;
 import framework.core.Coordinate;
+import framework.core.Direction;
 import framework.core.Side;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class BishopTest {
@@ -32,17 +34,67 @@ public class BishopTest {
     @Test
     public void getPossibleMoves() {
 
-        List<Coordinate> bishop1PossibleMoves = bishop1.getPossibleMoves();
-        assert (bishop1PossibleMoves.size() == 7);
+        Direction[] directions = {  Direction.NorthWest,
+                                    Direction.NorthEast,
+                                    Direction.SouthWest,
+                                    Direction.SouthEast,
+                                    Direction.West,
+                                    Direction.North,
+                                    Direction.East,
+                                    Direction.South,
+                                    Direction.Castling,
+                                    Direction.Jump,
+                                    Direction.Capture};
 
-        Coordinate test1 = new Coordinate(1, 1);
-        assert (bishop1PossibleMoves.contains(test1));
+        int[] results1 = {-1, -1, -1, 7, -1, -1, -1, -1, -1, -1, -1};
+        Map<Direction, List<Coordinate>> bishop1PossibleMoves = bishop1.getPossibleMoves();
 
-        List<Coordinate> bishop2PossibleMoves = bishop2.getPossibleMoves();
-        assert (bishop2PossibleMoves.size() == 13);
+        for (int i = 0; i < directions.length; i++) {
+            Direction tempDirection = directions[i];
+            List<Coordinate> tempMoves = bishop1PossibleMoves.get(tempDirection);
+            int tempResult = results1[i];
 
-        List<Coordinate> bishop3PossibleMoves = bishop3.getPossibleMoves();
-        assert (bishop3PossibleMoves.size() == 7);
+            if (tempResult == -1) {
+                assert (tempMoves == null);
+            } else {
+                assert (tempMoves.size() == tempResult);
+            }
+        }
+
+
+
+        int[] results2 = {3, 4, 3, 3, -1, -1, -1, -1, -1, -1, -1};
+        Map<Direction, List<Coordinate>> bishop2PossibleMoves = bishop2.getPossibleMoves();
+
+        for (int i = 0; i < directions.length; i++) {
+            Direction tempDirection = directions[i];
+            List<Coordinate> tempMoves = bishop2PossibleMoves.get(tempDirection);
+            int tempResult = results2[i];
+
+            if (tempResult == -1) {
+                assert (tempMoves == null);
+            } else {
+                assert (tempMoves.size() == tempResult);
+            }
+        }
+
+
+
+        Map<Direction, List<Coordinate>> bishop3PossibleMoves = bishop3.getPossibleMoves();
+        int[] results3 = {3, -1, 4, -1, -1, -1, -1, -1, -1, -1, -1};
+
+        for (int i = 0; i < directions.length; i++) {
+            Direction tempDirection = directions[i];
+            List<Coordinate> tempMoves = bishop3PossibleMoves.get(tempDirection);
+            int tempResult = results3[i];
+
+            if (tempResult == -1) {
+                assert (tempMoves == null);
+            } else {
+                assert (tempMoves.size() == tempResult);
+            }
+        }
+
 
     }
 

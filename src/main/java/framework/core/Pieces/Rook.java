@@ -1,9 +1,14 @@
 package framework.core.Pieces;
 
+import framework.core.Board;
 import framework.core.Coordinate;
+import framework.core.Direction;
 import framework.core.Side;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Rook extends PieceAbstract implements Piece {
 
@@ -22,8 +27,60 @@ public class Rook extends PieceAbstract implements Piece {
     }
 
     @Override
-    public List<Coordinate> getPossibleMoves() {
-        return null;
+    public Map<Direction, List<Coordinate>> getPossibleMoves() {
+
+        Map<Direction, List<Coordinate>> moves = new HashMap<>();
+
+        Coordinate coordinate = this.getCoordinate();
+        int row = coordinate.getRow();
+        int col = coordinate.getCol();
+
+        //NORTH
+        List<Coordinate> movesNorth = new ArrayList<>();
+        for (int tempRow = row - 1; tempRow >= 0; tempRow--) {
+            Coordinate tempCoordinate = new Coordinate(tempRow, col);
+            movesNorth.add(tempCoordinate);
+        }
+
+        if (!movesNorth.isEmpty()) {
+            moves.put(Direction.North, movesNorth);
+        }
+
+        //WEST
+        List<Coordinate> movesWest = new ArrayList<>();
+        for (int tempCol = col - 1; tempCol >= 0; tempCol--) {
+            Coordinate tempCoordinate = new Coordinate(row, tempCol);
+            movesWest.add(tempCoordinate);
+        }
+
+        if (!movesWest.isEmpty()) {
+            moves.put(Direction.West, movesWest);
+        }
+
+        //SOUTH
+        List<Coordinate> movesSouth = new ArrayList<>();
+        for (int tempRow = row + 1; tempRow < Board.getRows(); tempRow++) {
+            Coordinate tempCoordinate = new Coordinate(tempRow, col);
+            movesSouth.add(tempCoordinate);
+        }
+
+        if (!movesSouth.isEmpty()) {
+            moves.put(Direction.South, movesSouth);
+        }
+
+        //EAST
+        List<Coordinate> movesEast = new ArrayList<>();
+        for (int tempCol = col + 1; tempCol < Board.getCols(); tempCol++) {
+            Coordinate tempCoordinate = new Coordinate(row, tempCol);
+            movesEast.add(tempCoordinate);
+        }
+
+        if (!movesEast.isEmpty()) {
+            moves.put(Direction.East, movesEast);
+        }
+
+        return moves;
+
     }
 
     @Override

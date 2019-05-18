@@ -78,7 +78,7 @@ public final class Board {
 
     }
 
-    private boolean inBounds(Coordinate coordinate) {
+    public static boolean inBounds(Coordinate coordinate) {
         int row = coordinate.getRow();
         int col = coordinate.getCol();
         return (row >= 0) && (row < Board.rows) && (col >= 0) && (col < Board.cols);

@@ -3,7 +3,9 @@ package framework.core.Pieces;
 import framework.core.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Pawn extends PieceAbstract implements Piece {
 
@@ -17,35 +19,67 @@ public class Pawn extends PieceAbstract implements Piece {
 
 
     @Override
-    public List<Coordinate> getPossibleMoves() {
+    public Map<Direction, List<Coordinate>> getPossibleMoves() {
 
-        List<Coordinate> moves = new ArrayList<>();
+        Map<Direction, List<Coordinate>> moves = new HashMap<>();
 
-        int currentRow = this.getCoordinate().getRow();
-        int currentCol = this.getCoordinate().getCol();
+        Coordinate coordinate = this.getCoordinate();
+        int row = coordinate.getRow();
+        int col = coordinate.getCol();
+
 
 
         int sideMult = 1;
+
+        List<Coordinate> verticalMoves = new ArrayList<>();
+        Direction verticalDir = Direction.South;
         if (getSide() == Side.White) {
             sideMult = -1;
+            verticalDir = Direction.North;
         }
 
+
+        //vertical move
+        int tempRow1 = row + sideMult;
+        if (tempRow1 >= 0 && tempRow1 < Board.getRows()) {
+            Coordinate coordinate1 = new Coordinate(tempRow1, col);
+            verticalMoves.add(coordinate1);
+        }
+
+        //checking for double jump
         if (initPos) {
-            //checking for double jump
-            Coordinate coordinate1 = new Coordinate(currentRow - (2*sideMult), currentCol);
-            moves.add(coordinate1);
+            int tempRow2 = row + (2 * sideMult);
+            Coordinate coordinate2 = new Coordinate(tempRow2, col);
+            verticalMoves.add(coordinate2);
         }
 
-        //checking for vertical move
-        Coordinate coordinate2 = new Coordinate(currentRow - (1*sideMult), currentCol);
-        moves.add(coordinate2);
+        if (!verticalMoves.isEmpty()) {
+            moves.put(verticalDir, verticalMoves);
+        }
 
 
-        //checking for diagonal move
-        Coordinate coordinate3 = new Coordinate(currentRow - (1*sideMult), currentCol + 1);
-        Coordinate coordinate4 = new Coordinate(currentRow - (1*sideMult), currentCol - 1);
-        moves.add(coordinate3);
-        moves.add(coordinate4);
+        List<Coordinate> captureMoves = new ArrayList<>();
+        //checking for capture moves
+        int tempRow3 = row + sideMult;
+        if (tempRow3 >= 0 && tempRow3 < Board.getRows()) {
+
+            int tempCol1 = col + 1;
+            if (tempCol1 < Board.getCols()) {
+                Coordinate coordinate3 = new Coordinate(tempRow3, tempCol1);
+                captureMoves.add(coordinate3);
+            }
+
+            int tempCol2 = col - 1;
+            if (tempCol2 >= 0) {
+                Coordinate coordinate4 = new Coordinate(tempRow3, tempCol2);
+                captureMoves.add(coordinate4);
+            }
+
+        }
+
+        if (!captureMoves.isEmpty()) {
+            moves.put(Direction.Capture, captureMoves);
+        }
 
         return moves;
 
