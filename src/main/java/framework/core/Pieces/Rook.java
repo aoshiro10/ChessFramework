@@ -15,7 +15,7 @@ import static java.util.Objects.hash;
 public class Rook extends PieceAbstract implements Piece {
 
     private final String name = "Rook";
-    private boolean initPos = true;
+    private boolean initPos = false;
 
     public Rook(Side side, Coordinate coordinate) {
         super(side, coordinate);

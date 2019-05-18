@@ -17,6 +17,18 @@ public class BishopTest {
     private Bishop bishop2;
     private Bishop bishop3;
 
+    private Direction[] directions = {  Direction.NorthWest,
+                                        Direction.NorthEast,
+                                        Direction.SouthWest,
+                                        Direction.SouthEast,
+                                        Direction.West,
+                                        Direction.North,
+                                        Direction.East,
+                                        Direction.South,
+                                        Direction.Castling,
+                                        Direction.Jump,
+                                        Direction.Capture};
+
     @Before
     public void setUp() {
 
@@ -34,59 +46,26 @@ public class BishopTest {
     @Test
     public void getPossibleMoves() {
 
-        Direction[] directions = {  Direction.NorthWest,
-                                    Direction.NorthEast,
-                                    Direction.SouthWest,
-                                    Direction.SouthEast,
-                                    Direction.West,
-                                    Direction.North,
-                                    Direction.East,
-                                    Direction.South,
-                                    Direction.Castling,
-                                    Direction.Jump,
-                                    Direction.Capture};
-
         int[] results1 = {-1, -1, -1, 7, -1, -1, -1, -1, -1, -1, -1};
         Map<Direction, List<Coordinate>> bishop1PossibleMoves = bishop1.getPossibleMoves();
-
-        for (int i = 0; i < directions.length; i++) {
-            Direction tempDirection = directions[i];
-            List<Coordinate> tempMoves = bishop1PossibleMoves.get(tempDirection);
-            int tempResult = results1[i];
-
-            if (tempResult == -1) {
-                assert (tempMoves == null);
-            } else {
-                assert (tempMoves.size() == tempResult);
-            }
-        }
-
-
+        getPossibleMovesHelper(results1, bishop1PossibleMoves);
 
         int[] results2 = {3, 4, 3, 3, -1, -1, -1, -1, -1, -1, -1};
         Map<Direction, List<Coordinate>> bishop2PossibleMoves = bishop2.getPossibleMoves();
-
-        for (int i = 0; i < directions.length; i++) {
-            Direction tempDirection = directions[i];
-            List<Coordinate> tempMoves = bishop2PossibleMoves.get(tempDirection);
-            int tempResult = results2[i];
-
-            if (tempResult == -1) {
-                assert (tempMoves == null);
-            } else {
-                assert (tempMoves.size() == tempResult);
-            }
-        }
-
-
+        getPossibleMovesHelper(results2, bishop2PossibleMoves);
 
         Map<Direction, List<Coordinate>> bishop3PossibleMoves = bishop3.getPossibleMoves();
         int[] results3 = {3, -1, 4, -1, -1, -1, -1, -1, -1, -1, -1};
+        getPossibleMovesHelper(results3, bishop3PossibleMoves);
 
+    }
+
+    private void getPossibleMovesHelper(int[] results, Map<Direction, List<Coordinate>> possibleMoves) {
         for (int i = 0; i < directions.length; i++) {
             Direction tempDirection = directions[i];
-            List<Coordinate> tempMoves = bishop3PossibleMoves.get(tempDirection);
-            int tempResult = results3[i];
+            List<Coordinate> tempMoves = possibleMoves.get(tempDirection);
+
+            int tempResult = results[i];
 
             if (tempResult == -1) {
                 assert (tempMoves == null);
@@ -94,25 +73,38 @@ public class BishopTest {
                 assert (tempMoves.size() == tempResult);
             }
         }
-
-
     }
 
     @Test
     public void copy() {
 
-        Bishop bishop3Copy = (Bishop) bishop3.copy();
-        assert (bishop3Copy.toString().equals(bishop3.toString()));
-        assert (bishop3Copy.equals(bishop3));
-        assert (bishop3Copy.getCoordinate().equals(bishop3.getCoordinate()));
-        assert (!(bishop3 == bishop3Copy));
-        assert (!(bishop3.copy() == bishop3Copy));
+        Bishop bishop1Copy = (Bishop) bishop1.copy();
+
+        assert (bishop1Copy.equals(bishop1));
+        assert (bishop1Copy != bishop1);
+        assert (bishop1Copy.getCoordinate().equals(bishop1.getCoordinate()));
+        assert (bishop1Copy.getSide().equals(bishop1.getSide()));
 
         Bishop bishop2Copy = (Bishop) bishop2.copy();
+
         assert (bishop2Copy.equals(bishop2));
-        assert (bishop2Copy.toString().equals(bishop2Copy.toString()));
-        assert (bishop2Copy.getCoordinate().equals(bishop2Copy.getCoordinate()));
-        assert (!(bishop2 == bishop2Copy));
+        assert (bishop2Copy != bishop2);
+        assert (bishop2Copy.getCoordinate().equals(bishop2.getCoordinate()));
+        assert (bishop2Copy.getSide().equals(bishop2.getSide()));
+
+        Bishop bishop3Copy = (Bishop) bishop3.copy();
+
+        assert (bishop3Copy.equals(bishop3));
+        assert (bishop3Copy != bishop3);
+        assert (bishop3Copy.getCoordinate().equals(bishop3.getCoordinate()));
+        assert (bishop3Copy.getSide().equals(bishop3.getSide()));
+
+        Bishop bishop4Copy = (Bishop) bishop3.copy();
+
+        assert (bishop4Copy.equals(bishop3));
+        assert (bishop4Copy != bishop3);
+        assert (bishop4Copy.getCoordinate().equals(bishop3.getCoordinate()));
+        assert (bishop4Copy.getSide().equals(bishop3.getSide()));
 
     }
 

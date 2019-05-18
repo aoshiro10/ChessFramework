@@ -17,7 +17,7 @@ public class King extends PieceAbstract implements Piece {
 
     private final String name = "King";
 
-    private boolean initPos = true;
+    private boolean initPos = false;
 
     public King(Side side, Coordinate coordinate) {
         super(side, coordinate);
@@ -37,7 +37,7 @@ public class King extends PieceAbstract implements Piece {
         int row = coordinate.getRow();
         int col = coordinate.getCol();
 
-        //NORTHEAST
+        //North East
         int tempRow1 = row - 1;
         int tempCol1 = col + 1;
         Coordinate tempCoordinate1 = new Coordinate(tempRow1, tempCol1);
@@ -48,7 +48,9 @@ public class King extends PieceAbstract implements Piece {
             moves.put(Direction.NorthEast, movesNE);
         }
 
-        //NORTHWEST
+
+
+        //North West
         int tempRow2 = row - 1;
         int tempCol2 = col - 1;
         Coordinate tempCoordinate2 = new Coordinate(tempRow2, tempCol2);
@@ -58,7 +60,7 @@ public class King extends PieceAbstract implements Piece {
             moves.put(Direction.NorthWest, movesNW);
         }
 
-        //SOUTHWEST
+        //South West
         int tempRow3 = row + 1;
         int tempCol3 = col - 1;
         Coordinate tempCoordinate3 = new Coordinate(tempRow3, tempCol3);
@@ -68,7 +70,7 @@ public class King extends PieceAbstract implements Piece {
             moves.put(Direction.SouthWest, movesSW);
         }
 
-        //SOUTHEAST
+        //South East
         int tempRow4 = row + 1;
         int tempCol4 = col + 1;
         Coordinate tempCoordinate4 = new Coordinate(tempRow4, tempCol4);
@@ -94,6 +96,46 @@ public class King extends PieceAbstract implements Piece {
 
             moves.put(Direction.Castling, movesOther);
 
+        }
+
+        //East
+        int tempCol7 = col + 1;
+        Coordinate tempCoordinate7 = new Coordinate(row, tempCol7);
+        if (Board.inBounds(tempCoordinate7)) {
+
+            List<Coordinate> movesE = new ArrayList<>();
+            movesE.add(tempCoordinate7);
+            moves.put(Direction.East, movesE);
+        }
+
+        //West
+        int tempCol8 = col - 1;
+        Coordinate tempCoordinate8 = new Coordinate(row, tempCol8);
+        if (Board.inBounds(tempCoordinate8)) {
+
+            List<Coordinate> movesW = new ArrayList<>();
+            movesW.add(tempCoordinate8);
+            moves.put(Direction.West, movesW);
+        }
+
+        //North
+        int tempRow9 = row - 1;
+        Coordinate tempCoordinate9 = new Coordinate(tempRow9, col);
+        if (Board.inBounds(tempCoordinate9)) {
+
+            List<Coordinate> movesN = new ArrayList<>();
+            movesN.add(tempCoordinate9);
+            moves.put(Direction.North, movesN);
+        }
+
+        //South
+        int tempRow10 = row + 1;
+        Coordinate tempCoordinate10 = new Coordinate(tempRow10, col);
+        if (Board.inBounds(tempCoordinate10)) {
+
+            List<Coordinate> movesS = new ArrayList<>();
+            movesS.add(tempCoordinate10);
+            moves.put(Direction.South, movesS);
         }
 
         return  moves;

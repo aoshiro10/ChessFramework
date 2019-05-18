@@ -11,7 +11,7 @@ import static java.util.Objects.hash;
 
 public class Pawn extends PieceAbstract implements Piece {
 
-    private boolean initPos = true;
+    private boolean initPos = false;
 
     private final String name = "Pawn";
 
