@@ -1,9 +1,13 @@
 package framework.core.Pieces;
 
 import framework.core.Coordinate;
+import framework.core.Direction;
 import framework.core.Side;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.Map;
 
 
 public class RookTest {
@@ -13,6 +17,18 @@ public class RookTest {
     private Rook rook3;
     private Rook rook4;
     private Rook rook5;
+
+    private Direction[] directions = {  Direction.NorthWest,
+                                        Direction.NorthEast,
+                                        Direction.SouthWest,
+                                        Direction.SouthEast,
+                                        Direction.West,
+                                        Direction.North,
+                                        Direction.East,
+                                        Direction.South,
+                                        Direction.Castling,
+                                        Direction.Jump,
+                                        Direction.Capture};
 
     @Before
     public void setUp() {
@@ -71,8 +87,35 @@ public class RookTest {
 
     }
 
+    private void getPossibleMovesHelper(int[] results, Map<Direction, List<Coordinate>> possibleMoves) {
+        for (int i = 0; i < directions.length; i++) {
+            Direction tempDirection = directions[i];
+            List<Coordinate> tempMoves = possibleMoves.get(tempDirection);
+
+            int tempResult = results[i];
+
+            if (tempResult == -1) {
+                assert (tempMoves == null);
+            } else {
+                assert (tempMoves.size() == tempResult);
+            }
+        }
+    }
+
     @Test
     public void string() {
+
+        String result1 = "White Rook";
+        assert (result1.equals(rook1.toString()));
+
+        String result2 = "Black Rook";
+        assert (result2.equals(rook2.toString()));
+
+        String result3 = "Black Rook";
+        assert (result3.equals(rook3.toString()));
+
+        String result4 = "White Rook";
+        assert (result4.equals(rook4.toString()));
 
     }
 }

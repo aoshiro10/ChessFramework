@@ -1,9 +1,13 @@
 package framework.core.Pieces;
 
 import framework.core.Coordinate;
+import framework.core.Direction;
 import framework.core.Side;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.Map;
 
 
 public class PawnTest {
@@ -15,6 +19,19 @@ public class PawnTest {
     private Pawn pawn5;
     private Pawn pawn6;
     private Pawn pawn7;
+
+
+    private Direction[] directions = {  Direction.NorthWest,
+                                        Direction.NorthEast,
+                                        Direction.SouthWest,
+                                        Direction.SouthEast,
+                                        Direction.West,
+                                        Direction.North,
+                                        Direction.East,
+                                        Direction.South,
+                                        Direction.Castling,
+                                        Direction.Jump,
+                                        Direction.Capture};
 
 
     @Before
@@ -77,8 +94,35 @@ public class PawnTest {
 
     }
 
+    private void getPossibleMovesHelper(int[] results, Map<Direction, List<Coordinate>> possibleMoves) {
+        for (int i = 0; i < directions.length; i++) {
+            Direction tempDirection = directions[i];
+            List<Coordinate> tempMoves = possibleMoves.get(tempDirection);
+
+            int tempResult = results[i];
+
+            if (tempResult == -1) {
+                assert (tempMoves == null);
+            } else {
+                assert (tempMoves.size() == tempResult);
+            }
+        }
+    }
+
     @Test
     public void string() {
+
+        String result1 = "White Pawn";
+        assert (result1.equals(pawn1.toString()));
+
+        String result2 = "Black Pawn";
+        assert (result2.equals(pawn2.toString()));
+
+        String result3 = "Black Pawn";
+        assert (result3.equals(pawn3.toString()));
+
+        String result4 = "White Pawn";
+        assert (result4.equals(pawn4.toString()));
 
     }
 }

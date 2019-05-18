@@ -1,9 +1,13 @@
 package framework.core.Pieces;
 
 import framework.core.Coordinate;
+import framework.core.Direction;
 import framework.core.Side;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
+import java.util.Map;
 
 
 public class QueenTest {
@@ -12,6 +16,18 @@ public class QueenTest {
     private Queen queen2;
     private Queen queen3;
     private Queen queen4;
+
+    private Direction[] directions = {  Direction.NorthWest,
+                                        Direction.NorthEast,
+                                        Direction.SouthWest,
+                                        Direction.SouthEast,
+                                        Direction.West,
+                                        Direction.North,
+                                        Direction.East,
+                                        Direction.South,
+                                        Direction.Castling,
+                                        Direction.Jump,
+                                        Direction.Capture};
 
 
     @Before
@@ -34,6 +50,21 @@ public class QueenTest {
 
     @Test
     public void getPossibleMoves() {
+    }
+
+    private void getPossibleMovesHelper(int[] results, Map<Direction, List<Coordinate>> possibleMoves) {
+        for (int i = 0; i < directions.length; i++) {
+            Direction tempDirection = directions[i];
+            List<Coordinate> tempMoves = possibleMoves.get(tempDirection);
+
+            int tempResult = results[i];
+
+            if (tempResult == -1) {
+                assert (tempMoves == null);
+            } else {
+                assert (tempMoves.size() == tempResult);
+            }
+        }
     }
 
     @Test
@@ -71,6 +102,18 @@ public class QueenTest {
 
     @Test
     public void string() {
+
+        String result1 = "White Queen";
+        assert (result1.equals(queen1.toString()));
+
+        String result2 = "Black Queen";
+        assert (result2.equals(queen2.toString()));
+
+        String result3 = "Black Queen";
+        assert (result3.equals(queen3.toString()));
+
+        String result4 = "White Queen";
+        assert (result4.equals(queen4.toString()));
 
     }
 }
