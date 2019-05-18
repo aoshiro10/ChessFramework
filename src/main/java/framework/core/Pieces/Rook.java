@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Objects.hash;
+
 public class Rook extends PieceAbstract implements Piece {
 
     private final String name = "Rook";
@@ -20,10 +22,8 @@ public class Rook extends PieceAbstract implements Piece {
     }
 
 
-    @Override
-    public void move(Coordinate coordinate) {
-        super.move(coordinate);
-        this.initPos = false;
+    public void setInitPos(boolean initPos) {
+        this.initPos = initPos;
     }
 
     @Override
@@ -95,4 +95,20 @@ public class Rook extends PieceAbstract implements Piece {
     public String toString() {
         return getSide().toString() + " " + name;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof Rook)) {
+            return false;
+        }
+        Rook rook = (Rook) obj;
+        return (rook.initPos == this.initPos) && (rook.getSide().equals(this.getSide()))
+                && (rook.getCoordinate().equals(this.getCoordinate()));
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(this.getCoordinate(), this.getSide(), this.initPos);
+    }
+
 }

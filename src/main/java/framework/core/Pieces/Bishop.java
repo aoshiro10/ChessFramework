@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import static framework.core.Direction.*;
+import static java.util.Objects.hash;
 
 public class Bishop extends PieceAbstract implements Piece {
 
@@ -101,5 +102,19 @@ public class Bishop extends PieceAbstract implements Piece {
     @Override
     public String toString() {
         return this.getSide().toString() + " " + name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof Bishop)) {
+            return false;
+        }
+        Bishop bishop = (Bishop) obj;
+        return (bishop.getCoordinate().equals(this.getCoordinate())) && (bishop.getSide().equals(this.getSide()));
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(this.getCoordinate(), this.getSide());
     }
 }

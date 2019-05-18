@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Objects.hash;
+
 public class Pawn extends PieceAbstract implements Piece {
 
     private boolean initPos = true;
@@ -86,10 +88,8 @@ public class Pawn extends PieceAbstract implements Piece {
     }
 
 
-    @Override
-    public void move(Coordinate coordinate) {
-        super.move(coordinate);
-        initPos = false;
+    public void setInitPos(boolean initPos) {
+        this.initPos = initPos;
     }
 
     @Override
@@ -102,6 +102,21 @@ public class Pawn extends PieceAbstract implements Piece {
     @Override
     public String toString() {
         return getSide().toString() +  " " + name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof Pawn)) {
+            return false;
+        }
+        Pawn pawn = (Pawn) obj;
+        return (pawn.initPos == this.initPos) && (pawn.getSide().equals(this.getSide()))
+                && (pawn.getCoordinate().equals(this.getCoordinate()));
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(this.getCoordinate(), this.getSide(), this.initPos);
     }
 }
 

@@ -12,6 +12,7 @@ import java.util.Map;
 
 import static framework.core.Direction.*;
 import static framework.core.Direction.SouthWest;
+import static java.util.Objects.hash;
 
 public class Queen extends PieceAbstract implements Piece {
 
@@ -137,12 +138,25 @@ public class Queen extends PieceAbstract implements Piece {
 
     @Override
     public Piece copy() {
-        Queen queen = new Queen(this.getSide(), this.getCoordinate());
-        return queen;
+        return new Queen(this.getSide(), this.getCoordinate());
     }
 
     @Override
     public String toString() {
         return getSide().toString() + " " + name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof Queen)) {
+            return false;
+        }
+        Queen queen = (Queen) obj;
+        return (queen.getSide().equals(this.getSide())) && (queen.getCoordinate().equals(this.getCoordinate()));
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(this.getCoordinate(), this.getSide());
     }
 }

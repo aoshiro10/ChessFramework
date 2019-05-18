@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BinaryOperator;
 
+import static java.util.Objects.hash;
+
 public class King extends PieceAbstract implements Piece {
 
     private final String name = "King";
@@ -21,10 +23,9 @@ public class King extends PieceAbstract implements Piece {
         super(side, coordinate);
     }
 
-    @Override
-    public void move(Coordinate coordinate) {
-        super.move(coordinate);
-        this.initPos = false;
+
+    public void setInitPos(boolean initPos) {
+        this.initPos = initPos;
     }
 
     @Override
@@ -88,8 +89,8 @@ public class King extends PieceAbstract implements Piece {
             Coordinate tempCoordinate6 = new Coordinate(row, tempCol6);
 
             List<Coordinate> movesOther = new ArrayList<>();
-            movesOther.add(tempCoordinate1);
-            movesOther.add(tempCoordinate2);
+            movesOther.add(tempCoordinate5);
+            movesOther.add(tempCoordinate6);
 
             moves.put(Direction.Castling, movesOther);
 
@@ -109,5 +110,20 @@ public class King extends PieceAbstract implements Piece {
     @Override
     public String toString() {
         return getSide().toString() +  " " + name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof King)) {
+            return false;
+        }
+        King king = (King) obj;
+        return (king.initPos == this.initPos) && (king.getSide().equals(this.getSide()))
+                && (king.getCoordinate().equals(this.getCoordinate()));
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(this.getCoordinate(), this.getSide(), this.initPos);
     }
 }

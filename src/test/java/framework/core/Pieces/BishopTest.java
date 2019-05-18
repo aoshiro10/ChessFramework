@@ -103,11 +103,13 @@ public class BishopTest {
 
         Bishop bishop3Copy = (Bishop) bishop3.copy();
         assert (bishop3Copy.toString().equals(bishop3.toString()));
+        assert (bishop3Copy.equals(bishop3));
         assert (bishop3Copy.getCoordinate().equals(bishop3.getCoordinate()));
         assert (!(bishop3 == bishop3Copy));
         assert (!(bishop3.copy() == bishop3Copy));
 
         Bishop bishop2Copy = (Bishop) bishop2.copy();
+        assert (bishop2Copy.equals(bishop2));
         assert (bishop2Copy.toString().equals(bishop2Copy.toString()));
         assert (bishop2Copy.getCoordinate().equals(bishop2Copy.getCoordinate()));
         assert (!(bishop2 == bishop2Copy));

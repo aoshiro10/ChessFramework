@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Objects.hash;
+
 public class Knight extends PieceAbstract implements Piece {
 
     private final String name = "Knight";
@@ -121,5 +123,19 @@ public class Knight extends PieceAbstract implements Piece {
     @Override
     public String toString() {
         return getSide().toString() + " " + name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof Knight)) {
+            return  false;
+        }
+        Knight knight = (Knight) obj;
+        return (knight.getSide().equals(this.getSide())) && (knight.getCoordinate().equals(this.getCoordinate()));
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(this.getCoordinate(), this.getSide());
     }
 }

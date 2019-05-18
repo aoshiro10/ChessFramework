@@ -9,7 +9,6 @@ import java.util.Map;
 
 public interface Piece {
 
-    void move(Coordinate coordinate);
     Coordinate getCoordinate();
     Map<Direction, List<Coordinate>> getPossibleMoves();
     Side getSide();
