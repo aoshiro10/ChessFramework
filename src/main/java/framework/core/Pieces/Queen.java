@@ -18,6 +18,11 @@ public class Queen extends PieceAbstract implements Piece {
 
     private final String name = "Queen";
 
+    @Override
+    public String getPieceName() {
+        return name;
+    }
+
     public Queen(Side side, Coordinate coordinate) {
         super(side, coordinate);
     }

@@ -17,6 +17,11 @@ public class Rook extends PieceAbstract implements Piece {
     private final String name = "Rook";
     private boolean initPos = false;
 
+    @Override
+    public String getPieceName() {
+        return name;
+    }
+
     public Rook(Side side, Coordinate coordinate) {
         super(side, coordinate);
     }

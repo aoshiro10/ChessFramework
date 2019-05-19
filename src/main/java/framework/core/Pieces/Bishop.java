@@ -17,6 +17,11 @@ public class Bishop extends PieceAbstract implements Piece {
 
     private final String name = "Bishop";
 
+    @Override
+    public String getPieceName() {
+        return name;
+    }
+
     public Bishop(Side side, Coordinate coordinate) {
         super(side, coordinate);
     }

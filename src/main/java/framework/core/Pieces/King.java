@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BinaryOperator;
 
 import static java.util.Objects.hash;
 
@@ -23,6 +22,10 @@ public class King extends PieceAbstract implements Piece {
         super(side, coordinate);
     }
 
+    @Override
+    public String getPieceName() {
+        return name;
+    }
 
     public void setInitPos(boolean initPos) {
         this.initPos = initPos;

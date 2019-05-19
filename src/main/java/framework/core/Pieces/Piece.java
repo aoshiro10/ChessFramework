@@ -13,5 +13,8 @@ public interface Piece {
     Map<Direction, List<Coordinate>> getPossibleMoves();
     Side getSide();
     Piece copy();
+    void setInitPos(boolean initPos);
+    void setCoordinate(Coordinate coordinate);
+    String getPieceName();
 
 }

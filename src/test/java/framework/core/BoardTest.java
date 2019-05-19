@@ -30,5 +30,24 @@ public class BoardTest {
 
     @Test
     public void inBounds() {
+
+        Coordinate coordinate1 = new Coordinate(0, 0);
+        assert (Board.inBounds(coordinate1));
+
+        Coordinate coordinate2 = new Coordinate(3, 7);
+        assert (Board.inBounds(coordinate2));
+
+        Coordinate coordinate3 = new Coordinate(7, 7);
+        assert (Board.inBounds(coordinate3));
+
+        Coordinate coordinate4 = new Coordinate(-1, 3);
+        assert (!Board.inBounds(coordinate4));
+
+        Coordinate coordinate5 = new Coordinate(-1, -2);
+        assert (!Board.inBounds(coordinate5));
+
+        Coordinate coordinate6 = new Coordinate(8, 0);
+        assert (!Board.inBounds(coordinate6));
+
     }
 }

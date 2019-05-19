@@ -16,6 +16,11 @@ public class Knight extends PieceAbstract implements Piece {
 
     private final String name = "Knight";
 
+    @Override
+    public String getPieceName() {
+        return name;
+    }
+
     public Knight(Side side, Coordinate coordinate) {
         super(side, coordinate);
     }

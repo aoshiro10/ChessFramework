@@ -13,6 +13,9 @@ public abstract class PieceAbstract implements Piece {
         this.coordinate = coordinate;
     }
 
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
 
     @Override
     public Coordinate getCoordinate() {
@@ -20,6 +23,9 @@ public abstract class PieceAbstract implements Piece {
     }
 
 
+    @Override
+    public void setInitPos(boolean initPos) {
+    }
 
     @Override
     public Side getSide() {

@@ -15,6 +15,11 @@ public class Pawn extends PieceAbstract implements Piece {
 
     private final String name = "Pawn";
 
+    @Override
+    public String getPieceName() {
+        return name;
+    }
+
     public Pawn(Side side, Coordinate coordinate) {
         super(side, coordinate);
     }

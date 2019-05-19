@@ -211,15 +211,50 @@ public final class Board {
     }
 
     public Board(Board oldBoard, Move move) {
-//        this.blackKing = oldBoard.blackKing;
-//        this.whiteKing = oldBoard.whiteKing;
-        //TODO init and put pieces
+        HashMap<Coordinate, Piece> prev = oldBoard.board;
+
         board = new HashMap<>();
+
+        for (Coordinate coordinate : prev.keySet()) {
+            Piece oldPiece = prev.get(coordinate);
+            Piece newPiece = oldPiece.copy();
+            board.put(coordinate, newPiece);
+        }
+
+        Coordinate initCoor = move.getInitPos();
+        Coordinate destCoor = move.getDestPos();
+        Direction direction = move.getDirection();
+
+        Piece piece = board.get(initCoor);
+        board.remove(initCoor);
+
+        if (direction.equals(Direction.Castling)) {
+
+            Piece rook = board.get(destCoor);
+            int row = piece.getCoordinate().getRow();
+            int rootCol;
+            if (destCoor.getCol() == 7) {
+                rootCol = 5;
+            } else {
+                rootCol = 2;
+            }
+
+            Coordinate rootDist = new Coordinate(row, rootCol);
+
+            board.remove(destCoor);
+            board.put(rootDist, rook);
+            rook.setCoordinate(rootDist);
+            rook.setInitPos(false);
+
+        }
+
+        piece.setCoordinate(destCoor);
+        board.put(destCoor, piece);
+        piece.setInitPos(false);
+
     }
 
-
-
-    private List<Piece> getPieces(Side side) {
+    public List<Piece> getPieces(Side side) {
 
         List<Piece> pieces = new ArrayList<>();
 
@@ -235,25 +270,13 @@ public final class Board {
         return pieces;
     }
 
-
-    private boolean isValidCoordinate(Side side, Coordinate coordinate) {
-        if (!inBounds(coordinate)){
-            return false;
-        }
-
-        Piece movePiece = getPiece(coordinate);
-        return (movePiece == null) || (movePiece.getSide() != side);
-
-    }
-
     public static boolean inBounds(Coordinate coordinate) {
         int row = coordinate.getRow();
         int col = coordinate.getCol();
         return (row >= 0) && (row < Board.rows) && (col >= 0) && (col < Board.cols);
     }
 
-
-    private Piece getPiece(Coordinate coordinate) {
+    public Piece getPiece(Coordinate coordinate) {
         return board.get(coordinate);
     }
 
