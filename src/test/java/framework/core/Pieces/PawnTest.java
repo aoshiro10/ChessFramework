@@ -59,6 +59,35 @@ public class PawnTest {
 
     @Test
     public void getPossibleMoves() {
+
+        int[] results1 = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+        Map<Direction, List<Coordinate>> pawn1PossibleMoves = pawn1.getPossibleMoves();
+        getPossibleMovesHelper(results1, pawn1PossibleMoves);
+
+        int[] results2 = {-1, -1, -1, -1, -1, -1, -1, 1, -1, -1, 1};
+        Map<Direction, List<Coordinate>> pawn2PossibleMoves = pawn2.getPossibleMoves();
+        getPossibleMovesHelper(results2, pawn2PossibleMoves);
+
+        int[] results3 = {-1, -1, -1, -1, -1, -1, -1, 1, -1, -1, 2};
+        Map<Direction, List<Coordinate>> pawn3PossibleMoves = pawn3.getPossibleMoves();
+        getPossibleMovesHelper(results3, pawn3PossibleMoves);
+
+        int[] results4 = {-1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 2};
+        Map<Direction, List<Coordinate>> pawn4PossibleMoves = pawn4.getPossibleMoves();
+        getPossibleMovesHelper(results4, pawn4PossibleMoves);
+
+        int[] results5 = {-1, -1, -1, -1, -1, 1, -1, -1, -1, -1, 2};
+        Map<Direction, List<Coordinate>> pawn5PossibleMoves = pawn5.getPossibleMoves();
+        getPossibleMovesHelper(results5, pawn5PossibleMoves);
+
+        int[] results6 = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
+        Map<Direction, List<Coordinate>> pawn6PossibleMoves = pawn6.getPossibleMoves();
+        getPossibleMovesHelper(results6, pawn6PossibleMoves);
+
+        int[] results7 = {-1, -1, -1, -1, -1, 2, -1, -1, -1, -1, 2};
+        Map<Direction, List<Coordinate>> pawn7PossibleMoves = pawn7.getPossibleMoves();
+        getPossibleMovesHelper(results7, pawn7PossibleMoves);
+
     }
 
     @Test

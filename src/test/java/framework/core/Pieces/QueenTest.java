@@ -50,6 +50,24 @@ public class QueenTest {
 
     @Test
     public void getPossibleMoves() {
+
+        int[] results1 = {-1, -1, -1, 7, -1, -1, 7, 7, -1, -1, -1};
+        Map<Direction, List<Coordinate>> queen1PossibleMoves = queen1.getPossibleMoves();
+        getPossibleMovesHelper(results1, queen1PossibleMoves);
+
+        int[] results2 = {4, -1, 3, -1, 7, 4, -1, 3, -1, -1, -1};
+        Map<Direction, List<Coordinate>> queen2PossibleMoves = queen2.getPossibleMoves();
+        getPossibleMovesHelper(results2, queen2PossibleMoves);
+
+        int[] results3 = {3, 4, 3, 3, 3, 4, 4, 3, -1, -1, -1};
+        Map<Direction, List<Coordinate>> queen3PossibleMoves = queen3.getPossibleMoves();
+        getPossibleMovesHelper(results3, queen3PossibleMoves);
+
+
+        int[] results4 = {3, 4, -1, -1, 3, 7, 4, -1, -1, -1, -1};
+        Map<Direction, List<Coordinate>> queen4PossibleMoves = queen4.getPossibleMoves();
+        getPossibleMovesHelper(results4, queen4PossibleMoves);
+
     }
 
     private void getPossibleMovesHelper(int[] results, Map<Direction, List<Coordinate>> possibleMoves) {

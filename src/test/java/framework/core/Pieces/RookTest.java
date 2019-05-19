@@ -52,6 +52,23 @@ public class RookTest {
 
     @Test
     public void getPossibleMoves() {
+
+        int[] results1 = {-1, -1, -1, -1, -1, -1, 7, 7, -1, -1, -1};
+        Map<Direction, List<Coordinate>> rook1PossibleMoves = rook1.getPossibleMoves();
+        getPossibleMovesHelper(results1, rook1PossibleMoves);
+
+        int[] results2 = {-1, -1, -1, -1, 7, 4, -1, 3, -1, -1, -1};
+        Map<Direction, List<Coordinate>> rook2PossibleMoves = rook2.getPossibleMoves();
+        getPossibleMovesHelper(results2, rook2PossibleMoves);
+
+        int[] results3 = {-1, -1, -1, -1, 3, 4, 4, 3, -1, -1, -1};
+        Map<Direction, List<Coordinate>> rook3PossibleMoves = rook3.getPossibleMoves();
+        getPossibleMovesHelper(results3, rook3PossibleMoves);
+
+        int[] results4 = {-1, -1, -1, -1, 3, 7, 4, -1, -1, -1, -1};
+        Map<Direction, List<Coordinate>> rook4PossibleMoves = rook4.getPossibleMoves();
+        getPossibleMovesHelper(results4, rook4PossibleMoves);
+
     }
 
     @Test
