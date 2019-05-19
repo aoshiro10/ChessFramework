@@ -2,7 +2,6 @@ package framework.core;
 
 import framework.core.Pieces.*;
 
-import javax.print.attribute.standard.Destination;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +17,59 @@ public final class Board {
     private King whiteKing;
 
     public Board() {
-        initBoard();
+
+        int[] rows = {0, 1, 6, 7};
+        int[] cols = {0, 1, 2, 3, 4, 5, 6, 7};
+
+        board = new HashMap<>();
+        for (int row : rows) {
+            Side side;
+
+            if (row == 0 || row == 1) {
+                side = Side.Black;
+            } else {
+                side = Side.White;
+            }
+
+            for (int col : cols) {
+                Coordinate coordinate = new Coordinate(row, col);
+
+                if (row == 1 || row == 6) {
+                    Pawn pawn = new Pawn(side, coordinate);
+                    pawn.setInitPos(true);
+                    board.put(coordinate, pawn);
+                } else {
+
+                    if (col == 0 || col == 7) {
+                        Rook rook = new Rook(side, coordinate);
+                        rook.setInitPos(true);
+                        board.put(coordinate, rook);
+                    } else if (col == 1 || col == 6) {
+                        Knight knight = new Knight(side, coordinate);
+                        board.put(coordinate, knight);
+                    } else if (col == 2 || col == 5) {
+                        Bishop bishop = new Bishop(side, coordinate);
+                        board.put(coordinate, bishop);
+                    } else if (col == 3) {
+                        Queen queen = new Queen(side, coordinate);
+                        board.put(coordinate, queen);
+                    }
+
+                }
+            }
+
+        }
+
+        Coordinate bKingCoor = new Coordinate(0, 4);
+        blackKing = new King(Side.Black, bKingCoor);
+        blackKing.setInitPos(true);
+        board.put(bKingCoor, blackKing);
+
+        Coordinate wKingCoor = new Coordinate(7, 4);
+        whiteKing = new King(Side.White, wKingCoor);
+        whiteKing.setInitPos(true);
+        board.put(wKingCoor, whiteKing);
+
     }
 
 
@@ -91,6 +142,8 @@ public final class Board {
                         if (validMove(piece, destination)) {
                             Move tempMove = new Move(piece.getCoordinate(), destination, direction);
                             moves.add(tempMove);
+                        } else {
+                            break;
                         }
                     }
                 }
@@ -160,19 +213,10 @@ public final class Board {
     public Board(Board oldBoard, Move move) {
 //        this.blackKing = oldBoard.blackKing;
 //        this.whiteKing = oldBoard.whiteKing;
-        this.board = new HashMap<>();
         //TODO init and put pieces
+        board = new HashMap<>();
     }
 
-    private void initBoard() {
-
-        Coordinate bKingCoor = new Coordinate(0, 4);
-        blackKing = new King(Side.Black, bKingCoor);
-
-        Coordinate wKingCoor = new Coordinate(7, 4);
-        whiteKing = new King(Side.White, wKingCoor);
-
-    }
 
 
     private List<Piece> getPieces(Side side) {

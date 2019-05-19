@@ -36,6 +36,6 @@ public final class Coordinate {
 
     @Override
     public String toString() {
-        return "Row: " + Integer.toString(row) + " \nCols: " + Integer.toString(col);
+        return "Row: " + Integer.toString(row) + " Cols: " + Integer.toString(col);
     }
 }

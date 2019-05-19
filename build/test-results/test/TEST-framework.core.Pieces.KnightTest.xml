@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="framework.core.Pieces.KnightTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-05-19T00:34:04" hostname="Albertos-MacBook-Air.local" time="0.001">
+<testsuite name="framework.core.Pieces.KnightTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-05-19T02:15:53" hostname="Albertos-MacBook-Air.local" time="0.001">
   <properties/>
   <testcase name="getPossibleMoves" classname="framework.core.Pieces.KnightTest" time="0.0"/>
   <testcase name="string" classname="framework.core.Pieces.KnightTest" time="0.0"/>

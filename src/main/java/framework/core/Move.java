@@ -23,4 +23,9 @@ public class Move {
     public Direction getDirection() {
         return direction;
     }
+
+    @Override
+    public String toString() {
+        return "From: " + this.initPos.toString() + " to: " + this.destPos.toString();
+    }
 }
