@@ -4,8 +4,10 @@ public class Move {
 
     private final Coordinate initPos;
     private final Coordinate destPos;
+    private final Direction direction;
 
-    public Move(Coordinate initPos, Coordinate destPos) {
+    public Move(Coordinate initPos, Coordinate destPos, Direction direction) {
+        this.direction = direction;
         this.initPos = initPos;
         this.destPos = destPos;
     }
@@ -16,5 +18,9 @@ public class Move {
 
     public Coordinate getInitPos() {
         return initPos;
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 }

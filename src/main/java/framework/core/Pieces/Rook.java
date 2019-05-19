@@ -21,6 +21,9 @@ public class Rook extends PieceAbstract implements Piece {
         super(side, coordinate);
     }
 
+    public boolean getInitPos() {
+        return this.initPos;
+    }
 
     public void setInitPos(boolean initPos) {
         this.initPos = initPos;
