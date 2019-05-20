@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static java.util.Objects.hash;
 
-public class Knight extends PieceAbstract implements Piece {
+public class Knight extends Piece {
 
     private final String name = "Knight";
 
@@ -118,6 +118,11 @@ public class Knight extends PieceAbstract implements Piece {
             moves.put(Direction.Jump, jumps);
         }
         return moves;
+    }
+
+    @Override
+    public boolean hasPossibleMove(Coordinate coordinate) {
+        return false;
     }
 
     @Override

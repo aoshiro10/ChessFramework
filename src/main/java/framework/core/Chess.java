@@ -17,7 +17,7 @@ public class Chess {
     }
 
     public void move(Move move) {
-        this.board = new Board(this.board, move);
+        this.board = this.board.move(move);
         this.side = switchSide(side);
     }
 

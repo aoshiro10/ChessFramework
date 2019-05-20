@@ -9,7 +9,7 @@ import java.util.Map;
 
 import static java.util.Objects.hash;
 
-public class Pawn extends PieceAbstract implements Piece {
+public class Pawn extends Piece {
 
     private boolean initPos = false;
 
@@ -90,6 +90,11 @@ public class Pawn extends PieceAbstract implements Piece {
 
         return moves;
 
+    }
+
+    @Override
+    public boolean hasPossibleMove(Coordinate coordinate) {
+        return false;
     }
 
 

@@ -14,7 +14,7 @@ import static framework.core.Direction.*;
 import static framework.core.Direction.SouthWest;
 import static java.util.Objects.hash;
 
-public class Queen extends PieceAbstract implements Piece {
+public class Queen extends Piece {
 
     private final String name = "Queen";
 
@@ -139,6 +139,11 @@ public class Queen extends PieceAbstract implements Piece {
         }
 
         return moves;
+    }
+
+    @Override
+    public boolean hasPossibleMove(Coordinate coordinate) {
+        return false;
     }
 
     @Override

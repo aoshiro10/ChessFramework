@@ -7,14 +7,44 @@ import framework.core.Side;
 import java.util.List;
 import java.util.Map;
 
-public interface Piece {
+public abstract class Piece {
 
-    Coordinate getCoordinate();
-    Map<Direction, List<Coordinate>> getPossibleMoves();
-    Side getSide();
-    Piece copy();
-    void setInitPos(boolean initPos);
-    void setCoordinate(Coordinate coordinate);
-    String getPieceName();
+    private final Side side;
+    private Coordinate coordinate;
+
+    public Piece(Side side, Coordinate coordinate) {
+        this.side = side;
+        this.coordinate = coordinate;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
+
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+
+
+    public void setInitPos(boolean initPos) {
+    }
+
+
+    public Side getSide() {
+        return side;
+    }
+
+
+    abstract public Map<Direction, List<Coordinate>> getPossibleMoves();
+    abstract public boolean hasPossibleMove(Coordinate coordinate);
+
+    abstract public Piece copy();
+
+
+    abstract public String getPieceName();
+
+
 
 }

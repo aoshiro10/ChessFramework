@@ -13,7 +13,7 @@ import java.util.Map;
 import static framework.core.Direction.*;
 import static java.util.Objects.hash;
 
-public class Bishop extends PieceAbstract implements Piece {
+public class Bishop extends Piece {
 
     private final String name = "Bishop";
 
@@ -97,6 +97,60 @@ public class Bishop extends PieceAbstract implements Piece {
 
 
         return moves;
+    }
+
+    @Override
+    public boolean hasPossibleMove(Coordinate destination) {
+        Coordinate coordinate = this.getCoordinate();
+        int row = coordinate.getRow();
+        int col = coordinate.getCol();
+
+        //North East
+        int movesNE = Math.min(row, Math.abs(col-Board.getCols())-1);
+        for (int moveNE = 1; moveNE <= movesNE; moveNE++){
+            int tempRow = row - moveNE;
+            int tempCol = col + moveNE;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+            if (tempCoordinate.equals(destination)) {
+                return true;
+            }
+        }
+
+        //North West
+        int movesNW = Math.min(row, col);
+        for (int moveNW = 1; moveNW <= movesNW; moveNW++) {
+            int tempRow = row - moveNW;
+            int tempCol = col - moveNW;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+            if (tempCoordinate.equals(destination)) {
+                return true;
+            }
+        }
+
+        //South East
+        int movesSE = Math.min(Math.abs(row-Board.getRows())-1, Math.abs(col-Board.getCols())-1);
+        for (int moveSE = 1; moveSE <= movesSE; moveSE++) {
+            int tempRow = row + moveSE;
+            int tempCol = col + moveSE;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+            if (tempCoordinate.equals(destination)) {
+                return true;
+            }
+        }
+
+        //South West
+        int movesSW = Math.min(Math.abs(row-Board.getRows())-1, col);
+        for (int moveSW = 1; moveSW <= movesSW; moveSW++) {
+            int tempRow = row + moveSW;
+            int tempCol = col - moveSW;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+            if (tempCoordinate.equals(destination)) {
+                return true;
+            }
+        }
+
+        return false;
+
     }
 
     @Override

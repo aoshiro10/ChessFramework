@@ -93,17 +93,27 @@ public final class Board {
             kingPos = blackKing.getCoordinate();
         }
 
-        List<Move> opponentMoves = getValidMoves(oppositeSide);
-        for (Move move : opponentMoves) {
-            Coordinate destination = move.getDestPos();
-            if (destination.equals(kingPos)) {
-                return true;
+        int row = kingPos.getRow();
+        int col = kingPos.getCol();
+
+        //North
+        for (int tempRow = row - 1; row >= 0; row--) {
+            Coordinate tempCoordinate = new Coordinate(tempRow, col);
+            if (this.board.containsKey(tempCoordinate)) {
+                Piece piece = this.board.get(tempCoordinate);
+                if ((!piece.getSide().equals(side)) && (piece.hasPossibleMove(kingPos))){
+                    return true;
+                }
             }
         }
+
+
         return false;
     }
 
     public List<Move> getValidMoves(Side side) {
+
+        //TODO check if pawn is moving forward into an opponents tile
 
         List<Move> moves = new ArrayList<>();
         List<Piece> pieces = getPieces(side);
@@ -118,7 +128,14 @@ public final class Board {
                     for (Coordinate destination : directionMoves) {
                         if (validCastling(king, destination)) {
                             Move tempMove = new Move(piece.getCoordinate(), destination, direction);
-                            moves.add(tempMove);
+
+                            Board tempBoard = this.move(tempMove);
+
+                            if (!tempBoard.isCheck(side)) {
+                                moves.add(tempMove);
+                            }
+
+
                         }
                     }
                 } else if (direction.equals(Direction.Jump)) {
@@ -126,7 +143,11 @@ public final class Board {
                     for (Coordinate destination : directionMoves) {
                         if (validJump(knight, destination)) {
                             Move tempMove = new Move(piece.getCoordinate(), destination, direction);
-                            moves.add(tempMove);
+                            Board tempBoard = this.move(tempMove);
+
+                            if (!tempBoard.isCheck(side)) {
+                                moves.add(tempMove);
+                            }
                         }
                     }
                 } else if (direction.equals(Direction.Capture)) {
@@ -134,14 +155,22 @@ public final class Board {
                     for (Coordinate destination : directionMoves) {
                         if (validCapture(pawn, destination)) {
                             Move tempMove = new Move(piece.getCoordinate(), destination, direction);
-                            moves.add(tempMove);
+                            Board tempBoard = this.move(tempMove);
+
+                            if (!tempBoard.isCheck(side)) {
+                                moves.add(tempMove);
+                            }
                         }
                     }
                 } else {
                     for (Coordinate destination : directionMoves) {
                         if (validMove(piece, destination)) {
                             Move tempMove = new Move(piece.getCoordinate(), destination, direction);
-                            moves.add(tempMove);
+                            Board tempBoard = this.move(tempMove);
+
+                            if (!tempBoard.isCheck(side)) {
+                                moves.add(tempMove);
+                            }
                         } else {
                             break;
                         }
@@ -210,27 +239,30 @@ public final class Board {
 
     }
 
-    public Board(Board oldBoard, Move move) {
-        HashMap<Coordinate, Piece> prev = oldBoard.board;
+    public Board move(Move move) {
 
-        board = new HashMap<>();
+        Board newBoard = new Board();
+
+        HashMap<Coordinate, Piece> prev = this.board;
+
+        newBoard.board = new HashMap<>();
 
         for (Coordinate coordinate : prev.keySet()) {
             Piece oldPiece = prev.get(coordinate);
             Piece newPiece = oldPiece.copy();
-            board.put(coordinate, newPiece);
+            newBoard.board.put(coordinate, newPiece);
         }
 
         Coordinate initCoor = move.getInitPos();
         Coordinate destCoor = move.getDestPos();
         Direction direction = move.getDirection();
 
-        Piece piece = board.get(initCoor);
-        board.remove(initCoor);
+        Piece piece = newBoard.board.get(initCoor);
+        newBoard.board.remove(initCoor);
 
         if (direction.equals(Direction.Castling)) {
 
-            Piece rook = board.get(destCoor);
+            Piece rook = newBoard.board.get(destCoor);
             int row = piece.getCoordinate().getRow();
             int rootCol;
             if (destCoor.getCol() == 7) {
@@ -241,16 +273,18 @@ public final class Board {
 
             Coordinate rootDist = new Coordinate(row, rootCol);
 
-            board.remove(destCoor);
-            board.put(rootDist, rook);
+            newBoard.board.remove(destCoor);
+            newBoard.board.put(rootDist, rook);
             rook.setCoordinate(rootDist);
             rook.setInitPos(false);
 
         }
 
         piece.setCoordinate(destCoor);
-        board.put(destCoor, piece);
+        newBoard.board.put(destCoor, piece);
         piece.setInitPos(false);
+
+        return newBoard;
 
     }
 

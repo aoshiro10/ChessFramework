@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static java.util.Objects.hash;
 
-public class King extends PieceAbstract implements Piece {
+public class King extends Piece {
 
     private final String name = "King";
 
@@ -50,8 +50,6 @@ public class King extends PieceAbstract implements Piece {
             movesNE.add(tempCoordinate1);
             moves.put(Direction.NorthEast, movesNE);
         }
-
-
 
         //North West
         int tempRow2 = row - 1;
@@ -143,6 +141,11 @@ public class King extends PieceAbstract implements Piece {
 
         return  moves;
 
+    }
+
+    @Override
+    public boolean hasPossibleMove(Coordinate coordinate) {
+        return false;
     }
 
     @Override
