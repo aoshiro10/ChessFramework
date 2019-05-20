@@ -82,17 +82,51 @@ public class Rook extends Piece {
             Coordinate tempCoordinate = new Coordinate(row, tempCol);
             movesEast.add(tempCoordinate);
         }
-
         if (!movesEast.isEmpty()) {
             moves.put(Direction.East, movesEast);
         }
-
         return moves;
 
     }
 
     @Override
-    public boolean hasPossibleMove(Coordinate coordinate) {
+    public boolean hasPossibleCapture(Coordinate destination) {
+
+        Coordinate coordinate = this.getCoordinate();
+        int row = coordinate.getRow();
+        int col = coordinate.getCol();
+
+        //NORTH
+        for (int tempRow = row - 1; tempRow >= 0; tempRow--) {
+            Coordinate tempCoordinate = new Coordinate(tempRow, col);
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
+
+        //WEST
+        for (int tempCol = col - 1; tempCol >= 0; tempCol--) {
+            Coordinate tempCoordinate = new Coordinate(row, tempCol);
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
+
+        //SOUTH
+        for (int tempRow = row + 1; tempRow < Board.getRows(); tempRow++) {
+            Coordinate tempCoordinate = new Coordinate(tempRow, col);
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
+
+        //EAST
+        for (int tempCol = col + 1; tempCol < Board.getCols(); tempCol++) {
+            Coordinate tempCoordinate = new Coordinate(row, tempCol);
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -102,7 +136,6 @@ public class Rook extends Piece {
         rook.initPos = initPos;
         return rook;
     }
-
 
     @Override
     public String toString() {

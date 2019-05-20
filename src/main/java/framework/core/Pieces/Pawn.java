@@ -93,7 +93,29 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean hasPossibleMove(Coordinate coordinate) {
+    public boolean hasPossibleCapture(Coordinate destination) {
+
+        Coordinate coordinate = this.getCoordinate();
+        int row = coordinate.getRow();
+        int col = coordinate.getCol();
+
+        int sideMult = 1;
+
+        int tempRow3 = row + sideMult;
+        if (tempRow3 >= 0 && tempRow3 < Board.getRows()) {
+
+            int tempCol1 = col + 1;
+            Coordinate coordinate3 = new Coordinate(tempRow3, tempCol1);
+
+            int tempCol2 = col - 1;
+            Coordinate coordinate4 = new Coordinate(tempRow3, tempCol2);
+
+            if (destination.equals(coordinate3) || destination.equals(coordinate4)) {
+                return true;
+            }
+
+        }
+
         return false;
     }
 

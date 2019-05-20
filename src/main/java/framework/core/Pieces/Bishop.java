@@ -100,7 +100,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean hasPossibleMove(Coordinate destination) {
+    public boolean hasPossibleCapture(Coordinate destination) {
         Coordinate coordinate = this.getCoordinate();
         int row = coordinate.getRow();
         int col = coordinate.getCol();

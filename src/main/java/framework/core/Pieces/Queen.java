@@ -142,7 +142,89 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean hasPossibleMove(Coordinate coordinate) {
+    public boolean hasPossibleCapture(Coordinate destination) {
+
+        Coordinate coordinate = this.getCoordinate();
+        int row = coordinate.getRow();
+        int col = coordinate.getCol();
+
+        //NORTH
+        for (int tempRow = row - 1; tempRow >= 0; tempRow--) {
+            Coordinate tempCoordinate = new Coordinate(tempRow, col);
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
+
+        //WEST
+        for (int tempCol = col - 1; tempCol >= 0; tempCol--) {
+            Coordinate tempCoordinate = new Coordinate(row, tempCol);
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
+
+        //SOUTH
+        for (int tempRow = row + 1; tempRow < Board.getRows(); tempRow++) {
+            Coordinate tempCoordinate = new Coordinate(tempRow, col);
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
+
+        //EAST
+        for (int tempCol = col + 1; tempCol < Board.getCols(); tempCol++) {
+            Coordinate tempCoordinate = new Coordinate(row, tempCol);
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
+
+        //North East
+        int movesNE = Math.min(row, Math.abs(col-Board.getCols())-1);
+        for (int moveNE = 1; moveNE <= movesNE; moveNE++){
+            int tempRow = row - moveNE;
+            int tempCol = col + moveNE;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
+
+        //North West
+        int movesNW = Math.min(row, col);
+        for (int moveNW = 1; moveNW <= movesNW; moveNW++) {
+            int tempRow = row - moveNW;
+            int tempCol = col - moveNW;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
+
+        //South East
+        int movesSE = Math.min(Math.abs(row-Board.getRows())-1, Math.abs(col-Board.getCols())-1);
+        for (int moveSE = 1; moveSE <= movesSE; moveSE++) {
+            int tempRow = row + moveSE;
+            int tempCol = col + moveSE;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
+
+        //South West
+        int movesSW = Math.min(Math.abs(row-Board.getRows())-1, col);
+        for (int moveSW = 1; moveSW <= movesSW; moveSW++) {
+            int tempRow = row + moveSW;
+            int tempCol = col - moveSW;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+
+            if (destination.equals(tempCoordinate)) {
+                return true;
+            }
+        }
+
         return false;
     }
 

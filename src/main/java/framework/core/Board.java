@@ -83,13 +83,10 @@ public final class Board {
 
     public boolean isCheck(Side side) {
 
-        Side oppositeSide;
         Coordinate kingPos;
         if (side.equals(Side.White)) {
             kingPos = whiteKing.getCoordinate();
-            oppositeSide = Side.Black;
         } else {
-            oppositeSide = Side.White;
             kingPos = blackKing.getCoordinate();
         }
 
@@ -97,23 +94,190 @@ public final class Board {
         int col = kingPos.getCol();
 
         //North
-        for (int tempRow = row - 1; row >= 0; row--) {
+        for (int tempRow = row - 1; tempRow >= 0; tempRow--) {
             Coordinate tempCoordinate = new Coordinate(tempRow, col);
             if (this.board.containsKey(tempCoordinate)) {
-                Piece piece = this.board.get(tempCoordinate);
-                if ((!piece.getSide().equals(side)) && (piece.hasPossibleMove(kingPos))){
+                if (isCheckHelper(side, kingPos, tempCoordinate)) {
                     return true;
                 }
+                break;
             }
         }
 
+        //South
+        for (int tempRow = row + 1; tempRow < Board.rows; tempRow++) {
+            Coordinate tempCoordinate = new Coordinate(tempRow, col);
+            if (this.board.containsKey(tempCoordinate)) {
+                if (isCheckHelper(side, kingPos, tempCoordinate)) {
+                    return true;
+                }
+                break;
+            }
+        }
+
+        //East
+        for (int tempCol = col + 1; tempCol < Board.cols; tempCol++) {
+            Coordinate tempCoordinate = new Coordinate(row, tempCol);
+            if (this.board.containsKey(tempCoordinate)) {
+                if (isCheckHelper(side, kingPos, tempCoordinate)) {
+                    return true;
+                }
+                break;
+            }
+        }
+
+        //West
+        for (int tempCol = col - 1; tempCol >= 0; tempCol--) {
+            Coordinate tempCoordinate = new Coordinate(row, tempCol);
+            if (this.board.containsKey(tempCoordinate)) {
+                if (isCheckHelper(side, kingPos, tempCoordinate)) {
+                    return true;
+                }
+                break;
+            }
+        }
+
+        //North East
+        int movesNE = Math.min(row, Math.abs(col-Board.getCols())-1);
+        for (int moveNE = 1; moveNE <= movesNE; moveNE++){
+            int tempRow = row - moveNE;
+            int tempCol = col + moveNE;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+            if (this.board.containsKey(tempCoordinate)) {
+                if (isCheckHelper(side, kingPos, tempCoordinate)) {
+                    return true;
+                }
+                break;
+            }
+        }
+
+        //North West
+        int movesNW = Math.min(row, col);
+        for (int moveNW = 1; moveNW <= movesNW; moveNW++) {
+            int tempRow = row - moveNW;
+            int tempCol = col - moveNW;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+            if (this.board.containsKey(tempCoordinate)) {
+                if (isCheckHelper(side, kingPos, tempCoordinate)) {
+                    return true;
+                }
+                break;
+            }
+        }
+
+        //South East
+        int movesSE = Math.min(Math.abs(row-Board.getRows())-1, Math.abs(col-Board.getCols())-1);
+        for (int moveSE = 1; moveSE <= movesSE; moveSE++) {
+            int tempRow = row + moveSE;
+            int tempCol = col + moveSE;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+            if (this.board.containsKey(tempCoordinate)) {
+                if (isCheckHelper(side, kingPos, tempCoordinate)) {
+                    return true;
+                }
+                break;
+            }
+        }
+
+        //South West
+        int movesSW = Math.min(Math.abs(row-Board.getRows())-1, col);
+        for (int moveSW = 1; moveSW <= movesSW; moveSW++) {
+            int tempRow = row + moveSW;
+            int tempCol = col - moveSW;
+            Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+            if (this.board.containsKey(tempCoordinate)) {
+                if (isCheckHelper(side, kingPos, tempCoordinate)) {
+                    return true;
+                }
+                break;
+            }
+        }
+
+        //
+        //
+        ////
+        int tempRow1 = row - 2;
+        int tempCol1 = col - 1;
+        Coordinate tempCoordinate1 = new Coordinate(tempRow1, tempCol1);
+        if (this.board.containsKey(tempCoordinate1) && (isCheckHelper(side, kingPos, tempCoordinate1))) {
+            return true;
+        }
+
+        ////
+        //
+        //
+        int tempRow2 = row + 2;
+        int tempCol2 = col - 1;
+        Coordinate tempCoordinate2 = new Coordinate(tempRow2, tempCol2);
+        if (this.board.containsKey(tempCoordinate2) && (isCheckHelper(side, kingPos, tempCoordinate2))) {
+            return true;
+        }
+
+        //////
+        //
+        int tempRow3 = row - 1;
+        int tempCol3 = col - 2;
+        Coordinate tempCoordinate3 = new Coordinate(tempRow3, tempCol3);
+        if (this.board.containsKey(tempCoordinate3) && (isCheckHelper(side, kingPos, tempCoordinate3))) {
+            return true;
+        }
+
+        ///////
+        //
+        int tempRow4 = row - 1;
+        int tempCol4 = col + 2;
+        Coordinate tempCoordinate4 = new Coordinate(tempRow4, tempCol4);
+        if (this.board.containsKey(tempCoordinate4) && (isCheckHelper(side, kingPos, tempCoordinate4))) {
+            return true;
+        }
+
+        ////
+        //
+        //
+        int tempRow5 = row + 2;
+        int tempCol5 = col + 1;
+        Coordinate tempCoordinate5 = new Coordinate(tempRow5, tempCol5);
+        if (this.board.containsKey(tempCoordinate5) && (isCheckHelper(side, kingPos, tempCoordinate5))) {
+            return true;
+        }
+
+        //
+        //
+        ////
+        int tempRow6 = row - 2;
+        int tempCol6 = col + 1;
+        Coordinate tempCoordinate6 = new Coordinate(tempRow6, tempCol6);
+        if (this.board.containsKey(tempCoordinate6) && (isCheckHelper(side, kingPos, tempCoordinate6))) {
+            return true;
+        }
+
+        //
+        //////
+        int tempRow7 = row + 1;
+        int tempCol7 = col - 2;
+        Coordinate tempCoordinate7 = new Coordinate(tempRow7, tempCol7);
+        if (this.board.containsKey(tempCoordinate7) && (isCheckHelper(side, kingPos, tempCoordinate7))) {
+            return true;
+        }
+
+        //
+        //////
+        int tempRow8 = row + 1;
+        int tempCol8 = col + 2;
+        Coordinate tempCoordinate8 = new Coordinate(tempRow8, tempCol8);
+        if (this.board.containsKey(tempCoordinate8) && (isCheckHelper(side, kingPos, tempCoordinate8))) {
+            return true;
+        }
 
         return false;
     }
 
-    public List<Move> getValidMoves(Side side) {
+    private boolean isCheckHelper(Side side, Coordinate kingPos, Coordinate tempCoordinate) {
+        Piece piece = this.board.get(tempCoordinate);
+        return (!piece.getSide().equals(side)) && (piece.hasPossibleCapture(kingPos));
+    }
 
-        //TODO check if pawn is moving forward into an opponents tile
+    public List<Move> getValidMoves(Side side) {
 
         List<Move> moves = new ArrayList<>();
         List<Piece> pieces = getPieces(side);
@@ -178,13 +342,18 @@ public final class Board {
                 }
             }
         }
-
         return moves;
-
     }
 
     private boolean validMove(Piece piece, Coordinate destination) {
         Side side = piece.getSide();
+
+        //bad style
+        //checking if piece is pawn, because pawns can't capture moving vertically.
+        if ((piece instanceof Pawn) && (board.containsKey(destination))) {
+            return false;
+        }
+
         return !((board.containsKey(destination)) && (board.get(destination).getSide().equals(side)));
     }
 

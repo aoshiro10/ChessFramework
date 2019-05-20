@@ -38,7 +38,7 @@ public abstract class Piece {
 
 
     abstract public Map<Direction, List<Coordinate>> getPossibleMoves();
-    abstract public boolean hasPossibleMove(Coordinate coordinate);
+    abstract public boolean hasPossibleCapture(Coordinate coordinate);
 
     abstract public Piece copy();
 

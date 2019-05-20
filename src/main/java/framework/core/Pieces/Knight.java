@@ -121,8 +121,90 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean hasPossibleMove(Coordinate coordinate) {
+    public boolean hasPossibleCapture(Coordinate destination) {
+
+        Coordinate coordinate = this.getCoordinate();
+        int row = coordinate.getRow();
+        int col = coordinate.getCol();
+
+        //
+        //
+        ////
+        int tempRow1 = row - 2;
+        int tempCol1 = col - 1;
+        Coordinate tempCoordinate1 = new Coordinate(tempRow1, tempCol1);
+        if (destination.equals(tempCoordinate1)) {
+            return true;
+        }
+
+        ////
+        //
+        //
+        int tempRow2 = row + 2;
+        int tempCol2 = col - 1;
+        Coordinate tempCoordinate2 = new Coordinate(tempRow2, tempCol2);
+        if (destination.equals(tempCoordinate2)) {
+            return true;
+        }
+
+        //////
+        //
+        int tempRow3 = row - 1;
+        int tempCol3 = col - 2;
+        Coordinate tempCoordinate3 = new Coordinate(tempRow3, tempCol3);
+        if (destination.equals(tempCoordinate3)) {
+            return true;
+        }
+
+        ///////
+        //
+        int tempRow4 = row - 1;
+        int tempCol4 = col + 2;
+        Coordinate tempCoordinate4 = new Coordinate(tempRow4, tempCol4);
+        if (destination.equals(tempCoordinate4)) {
+            return true;
+        }
+
+        ////
+        //
+        //
+        int tempRow5 = row + 2;
+        int tempCol5 = col + 1;
+        Coordinate tempCoordinate5 = new Coordinate(tempRow5, tempCol5);
+        if (destination.equals(tempCoordinate5)) {
+            return true;
+        }
+
+        //
+        //
+        ////
+        int tempRow6 = row - 2;
+        int tempCol6 = col + 1;
+        Coordinate tempCoordinate6 = new Coordinate(tempRow6, tempCol6);
+        if (destination.equals(tempCoordinate6)) {
+            return true;
+        }
+
+        //
+        //////
+        int tempRow7 = row + 1;
+        int tempCol7 = col - 2;
+        Coordinate tempCoordinate7 = new Coordinate(tempRow7, tempCol7);
+        if (destination.equals(tempCoordinate7)) {
+            return true;
+        }
+
+        //
+        //////
+        int tempRow8 = row + 1;
+        int tempCol8 = col + 2;
+        Coordinate tempCoordinate8 = new Coordinate(tempRow8, tempCol8);
+        if (destination.equals(tempCoordinate8)) {
+            return true;
+        }
+
         return false;
+
     }
 
     @Override
