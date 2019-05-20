@@ -1,13 +1,19 @@
 package framework.core;
 
+import framework.gui.TileButton;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Chess {
 
     private Side side;
     private Board board;
+    private List<TileButton> tileButtons;
+
 
     public Chess() {
+        tileButtons = new ArrayList<>();
         board = new Board();
         side = Side.White;
     }
@@ -26,6 +32,16 @@ public class Chess {
             return Side.Black;
         }
         return Side.White;
+    }
+
+    public void addTileButton(TileButton tileButton) {
+        tileButtons.add(tileButton);
+    }
+
+    public void updateAll() {
+        for (TileButton tileButton : tileButtons) {
+            tileButton.update(this);
+        }
     }
 
     public List<Move> getMoves() {

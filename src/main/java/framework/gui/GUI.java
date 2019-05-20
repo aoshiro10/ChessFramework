@@ -18,7 +18,9 @@ public class GUI {
     private static JFrame jFrame;
     private static Chess chess;
     private static JPanel boardPanel;
+
     private static Coordinate selected;
+    private static List<TileButton> tiles;
 
     public GUI(Chess chess) {
         GUI.chess = chess;
@@ -29,7 +31,13 @@ public class GUI {
     }
 
 
+    public static Coordinate getSelected() {
+        return selected;
+    }
 
+    public static void setSelected(Coordinate selected) {
+        GUI.selected = selected;
+    }
 
     private static void updateBoard() {
 
@@ -44,111 +52,17 @@ public class GUI {
                 } else if (row == 8 || col == 8) {
                     updateSideLabels(row, col);
                 } else {
-                    updateButtons(row, col);
+                    TileButton tileButton = new TileButton(new Coordinate(row, col));
+                    boardPanel.add(tileButton);
+                    chess.addTileButton(tileButton);
                 }
             }
         }
-        jFrame.repaint();
+        chess.updateAll();
         jFrame.revalidate();
 
     }
 
-    private static void updateButtons(int row, int col) {
-
-        Coordinate tempCoordinate = new Coordinate(row, col);
-        Board board = chess.getBoard();
-
-
-        if (selected == null) {
-
-            if (board.getPiece(tempCoordinate) != null) {
-
-                Piece piece = board.getPiece(tempCoordinate);
-                Image img = null;
-                try {
-                    img = piece.getImage(piece.getSide());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                JButton button = new JButton();
-                button.setIcon(new ImageIcon(img));
-
-                if (!piece.getSide().equals(chess.getSide())) {
-                    button.setEnabled(false);
-                }
-
-                final int tempRow = row;
-                final int tempCol = col;
-
-                button.addActionListener(e -> {
-                    selected = new Coordinate(tempRow, tempCol);
-                    updateBoard();
-                });
-
-                boardPanel.add(button);
-
-            } else {
-                JButton button = new JButton();
-                button.setEnabled(false);
-                boardPanel.add(button);
-
-            }
-
-        } else {
-
-            if (board.getPiece(tempCoordinate) != null) {
-
-                Piece piece = board.getPiece(tempCoordinate);
-
-                Image img = null;
-                try {
-                    img = piece.getImage(piece.getSide());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                JButton button = new JButton();
-                button.setIcon(new ImageIcon(img));
-
-                if (tempCoordinate.equals(selected)) {
-
-                    System.out.println("once");
-                    button.setEnabled(true);
-
-                    button.addActionListener(e -> {
-                        selected = null;
-                        updateBoard();
-                    });
-
-                } else {
-                    button.setEnabled(false);
-                }
-                boardPanel.add(button);
-            } else {
-
-                Piece selectedPiece = board.getPiece(selected);
-                List<Move> availableMoves = board.getValidMoves(selectedPiece);
-
-                boolean foundTile = false;
-
-                for (Move move : availableMoves) {
-                    if (move.getDestPos().equals(tempCoordinate)) {
-                        foundTile = true;
-                        break;
-                    }
-
-                }
-                JButton button = new JButton();
-                if (foundTile) {
-                    button.setEnabled(true);
-                } else {
-                    button.setEnabled(false);
-                }
-                boardPanel.add(button);
-            }
-
-        }
-
-    }
 
 
     private static void updateSideLabels(int row, int col) {

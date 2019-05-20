@@ -365,6 +365,10 @@ public final class Board {
         return moves;
     }
 
+    public boolean hasPiece(Coordinate coordinate) {
+        return this.board.containsKey(coordinate);
+    }
+
     private boolean validMove(Piece piece, Coordinate destination) {
         Side side = piece.getSide();
 
