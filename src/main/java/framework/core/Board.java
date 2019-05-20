@@ -143,8 +143,11 @@ public final class Board {
             int tempRow = row - moveNE;
             int tempCol = col + moveNE;
             Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
+
             if (this.board.containsKey(tempCoordinate)) {
+
                 if (isCheckHelper(side, kingPos, tempCoordinate)) {
+
                     return true;
                 }
                 break;
@@ -274,6 +277,7 @@ public final class Board {
 
     private boolean isCheckHelper(Side side, Coordinate kingPos, Coordinate tempCoordinate) {
         Piece piece = this.board.get(tempCoordinate);
+
         return (!piece.getSide().equals(side)) && (piece.hasPossibleCapture(kingPos));
     }
 
@@ -283,6 +287,7 @@ public final class Board {
         List<Piece> pieces = getPieces(side);
 
         for (Piece piece : pieces) {
+
             Map<Direction, List<Coordinate>> possibleMoves = piece.getPossibleMoves();
             for (Direction direction : possibleMoves.keySet()) {
                 List<Coordinate> directionMoves = possibleMoves.get(direction);
@@ -334,7 +339,11 @@ public final class Board {
 
                             if (!tempBoard.isCheck(side)) {
                                 moves.add(tempMove);
+                                if (board.containsKey(destination)) {
+                                    break;
+                                }
                             }
+
                         } else {
                             break;
                         }
@@ -422,6 +431,14 @@ public final class Board {
             newBoard.board.put(coordinate, newPiece);
         }
 
+        King blackKing = (King) this.blackKing.copy();
+        King whiteKing = (King) this.whiteKing.copy();
+        newBoard.blackKing = blackKing;
+        newBoard.whiteKing = whiteKing;
+        newBoard.board.put(blackKing.getCoordinate(), blackKing);
+        newBoard.board.put(whiteKing.getCoordinate(), whiteKing);
+
+
         Coordinate initCoor = move.getInitPos();
         Coordinate destCoor = move.getDestPos();
         Direction direction = move.getDirection();
@@ -463,7 +480,7 @@ public final class Board {
 
         for (Coordinate coordinate : this.board.keySet()) {
             Piece piece = this.board.get(coordinate);
-            if (piece.getSide().equals(side)) {
+            if (!piece.getSide().equals(side)) {
                 continue;
             }
             Piece copy = piece.copy();
