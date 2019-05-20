@@ -41,4 +41,7 @@ public class Chess {
         return switchSide(this.side);
     }
 
+    public Side getSide() {
+        return side;
+    }
 }

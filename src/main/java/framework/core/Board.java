@@ -281,75 +281,86 @@ public final class Board {
         return (!piece.getSide().equals(side)) && (piece.hasPossibleCapture(kingPos));
     }
 
+    public List<Move> getValidMoves(Piece piece) {
+
+        List<Move> moves = new ArrayList<>();
+        Side side = piece.getSide();
+
+        Map<Direction, List<Coordinate>> possibleMoves = piece.getPossibleMoves();
+        for (Direction direction : possibleMoves.keySet()) {
+            List<Coordinate> directionMoves = possibleMoves.get(direction);
+
+            if (direction.equals(Direction.Castling)) {
+                King king = (King) piece;
+                for (Coordinate destination : directionMoves) {
+                    if (validCastling(king, destination)) {
+                        Move tempMove = new Move(piece.getCoordinate(), destination, direction);
+
+                        Board tempBoard = this.move(tempMove);
+
+                        if (!tempBoard.isCheck(side)) {
+                            moves.add(tempMove);
+                        }
+
+
+                    }
+                }
+            } else if (direction.equals(Direction.Jump)) {
+                Knight knight = (Knight) piece;
+                for (Coordinate destination : directionMoves) {
+                    if (validJump(knight, destination)) {
+                        Move tempMove = new Move(piece.getCoordinate(), destination, direction);
+                        Board tempBoard = this.move(tempMove);
+
+                        if (!tempBoard.isCheck(side)) {
+                            moves.add(tempMove);
+                        }
+                    }
+                }
+            } else if (direction.equals(Direction.Capture)) {
+                Pawn pawn = (Pawn) piece;
+                for (Coordinate destination : directionMoves) {
+                    if (validCapture(pawn, destination)) {
+                        Move tempMove = new Move(piece.getCoordinate(), destination, direction);
+                        Board tempBoard = this.move(tempMove);
+
+                        if (!tempBoard.isCheck(side)) {
+                            moves.add(tempMove);
+                        }
+                    }
+                }
+            } else {
+                for (Coordinate destination : directionMoves) {
+                    if (validMove(piece, destination)) {
+                        Move tempMove = new Move(piece.getCoordinate(), destination, direction);
+                        Board tempBoard = this.move(tempMove);
+
+                        if (!tempBoard.isCheck(side)) {
+                            moves.add(tempMove);
+                            if (board.containsKey(destination)) {
+                                break;
+                            }
+                        }
+
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return moves;
+
+    }
+
     public List<Move> getValidMoves(Side side) {
 
         List<Move> moves = new ArrayList<>();
         List<Piece> pieces = getPieces(side);
 
         for (Piece piece : pieces) {
-
-            Map<Direction, List<Coordinate>> possibleMoves = piece.getPossibleMoves();
-            for (Direction direction : possibleMoves.keySet()) {
-                List<Coordinate> directionMoves = possibleMoves.get(direction);
-
-                if (direction.equals(Direction.Castling)) {
-                    King king = (King) piece;
-                    for (Coordinate destination : directionMoves) {
-                        if (validCastling(king, destination)) {
-                            Move tempMove = new Move(piece.getCoordinate(), destination, direction);
-
-                            Board tempBoard = this.move(tempMove);
-
-                            if (!tempBoard.isCheck(side)) {
-                                moves.add(tempMove);
-                            }
-
-
-                        }
-                    }
-                } else if (direction.equals(Direction.Jump)) {
-                    Knight knight = (Knight) piece;
-                    for (Coordinate destination : directionMoves) {
-                        if (validJump(knight, destination)) {
-                            Move tempMove = new Move(piece.getCoordinate(), destination, direction);
-                            Board tempBoard = this.move(tempMove);
-
-                            if (!tempBoard.isCheck(side)) {
-                                moves.add(tempMove);
-                            }
-                        }
-                    }
-                } else if (direction.equals(Direction.Capture)) {
-                    Pawn pawn = (Pawn) piece;
-                    for (Coordinate destination : directionMoves) {
-                        if (validCapture(pawn, destination)) {
-                            Move tempMove = new Move(piece.getCoordinate(), destination, direction);
-                            Board tempBoard = this.move(tempMove);
-
-                            if (!tempBoard.isCheck(side)) {
-                                moves.add(tempMove);
-                            }
-                        }
-                    }
-                } else {
-                    for (Coordinate destination : directionMoves) {
-                        if (validMove(piece, destination)) {
-                            Move tempMove = new Move(piece.getCoordinate(), destination, direction);
-                            Board tempBoard = this.move(tempMove);
-
-                            if (!tempBoard.isCheck(side)) {
-                                moves.add(tempMove);
-                                if (board.containsKey(destination)) {
-                                    break;
-                                }
-                            }
-
-                        } else {
-                            break;
-                        }
-                    }
-                }
-            }
+            List<Move> pieceMoves = getValidMoves(piece);
+            moves.addAll(pieceMoves);
         }
         return moves;
     }
