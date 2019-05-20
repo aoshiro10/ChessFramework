@@ -2,6 +2,10 @@ package framework.core.Pieces;
 
 import framework.core.*;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,6 +94,14 @@ public class Pawn extends Piece {
 
         return moves;
 
+    }
+
+    @Override
+    public BufferedImage getImage(Side side) throws IOException {
+        if (side.equals(Side.White)) {
+            return ImageIO.read(new File("src/main/resources/pawn_white.png"));
+        }
+        return ImageIO.read(new File("src/main/resources/pawn_black.png"));
     }
 
     @Override

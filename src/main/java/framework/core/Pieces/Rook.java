@@ -5,6 +5,10 @@ import framework.core.Coordinate;
 import framework.core.Direction;
 import framework.core.Side;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -140,6 +144,14 @@ public class Rook extends Piece {
     @Override
     public String toString() {
         return getSide().toString() + " " + name;
+    }
+
+    @Override
+    public BufferedImage getImage(Side side) throws IOException {
+        if (side.equals(Side.White)) {
+            return ImageIO.read(new File("src/main/resources/rook_white.png"));
+        }
+        return ImageIO.read(new File("src/main/resources/rook_black.png"));
     }
 
     @Override

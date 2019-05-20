@@ -4,6 +4,8 @@ import framework.core.Coordinate;
 import framework.core.Direction;
 import framework.core.Side;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +43,8 @@ public abstract class Piece {
     abstract public boolean hasPossibleCapture(Coordinate coordinate);
 
     abstract public Piece copy();
+
+    abstract public BufferedImage getImage(Side side) throws IOException;
 
 
     abstract public String getPieceName();
