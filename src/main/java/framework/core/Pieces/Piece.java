@@ -23,32 +23,21 @@ public abstract class Piece {
         this.coordinate = coordinate;
     }
 
-
     public Coordinate getCoordinate() {
         return coordinate;
     }
 
-
-
     public void setInitPos(boolean initPos) {
     }
-
 
     public Side getSide() {
         return side;
     }
 
-
     abstract public Map<Direction, List<Coordinate>> getPossibleMoves();
     abstract public boolean hasPossibleCapture(Coordinate coordinate);
-
     abstract public Piece copy();
-
     abstract public BufferedImage getImage(Side side) throws IOException;
-
-
     abstract public String getPieceName();
-
-
 
 }
