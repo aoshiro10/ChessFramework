@@ -1,6 +1,6 @@
 package framework.core;
 
-import framework.gui.TileButton;
+import framework.gui.Listener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +9,11 @@ public class Chess {
 
     private Side side;
     private Board board;
-    private List<TileButton> tileButtons;
+    private List<Listener> listeners;
 
 
     public Chess() {
-        tileButtons = new ArrayList<>();
+        listeners = new ArrayList<>();
         board = new Board();
         side = Side.White;
     }
@@ -34,13 +34,13 @@ public class Chess {
         return Side.White;
     }
 
-    public void addTileButton(TileButton tileButton) {
-        tileButtons.add(tileButton);
+    public void addListener(Listener listener) {
+        listeners.add(listener);
     }
 
     public void updateAll() {
-        for (TileButton tileButton : tileButtons) {
-            tileButton.update(this);
+        for (Listener listener : listeners) {
+            listener.update(this);
         }
     }
 

@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
-public class TileButton extends JButton {
+public class TileButton extends JButton implements Listener{
 
     private final Coordinate coordinate;
 
@@ -104,7 +104,6 @@ public class TileButton extends JButton {
 
 
     }
-
 
     private Move findMove(List<Move> moves) {
 

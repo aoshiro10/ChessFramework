@@ -1,16 +1,10 @@
 package framework.gui;
 
-import framework.core.Board;
 import framework.core.Chess;
 import framework.core.Coordinate;
-import framework.core.Move;
-import framework.core.Pieces.Piece;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.List;
 
 public class GUI {
@@ -58,7 +52,7 @@ public class GUI {
                 } else {
                     TileButton tileButton = new TileButton(new Coordinate(row, col));
                     boardPanel.add(tileButton);
-                    chess.addTileButton(tileButton);
+                    chess.addListener(tileButton);
                 }
             }
         }
@@ -81,8 +75,9 @@ public class GUI {
     }
 
     private static void updateCurrentPlayerLabel() {
-        JLabel label = new JLabel("Turn: " + chess.getSide().toString(), SwingConstants.CENTER);
+        PlayerLabel label = new PlayerLabel("Turn: " + chess.getSide().toString(), SwingConstants.CENTER);
         boardPanel.add(label);
+        chess.addListener(label);
     }
 
     private static JFrame gameFrame() {
