@@ -44,7 +44,7 @@ public class Pawn extends Piece {
 
         List<Coordinate> verticalMoves = new ArrayList<>();
         Direction verticalDir = Direction.South;
-        if (getSide() == Side.White) {
+        if (getSide().equals(Side.White)) {
             sideMult = -1;
             verticalDir = Direction.North;
         }
@@ -112,6 +112,9 @@ public class Pawn extends Piece {
         int col = coordinate.getCol();
 
         int sideMult = 1;
+        if (getSide().equals(Side.White)) {
+            sideMult = -1;
+        }
 
         int tempRow3 = row + sideMult;
         if (tempRow3 >= 0 && tempRow3 < Board.getRows()) {

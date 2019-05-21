@@ -353,6 +353,7 @@ public final class Board {
 
     }
 
+
     public List<Move> getValidMoves(Side side) {
 
         List<Move> moves = new ArrayList<>();
