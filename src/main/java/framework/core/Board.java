@@ -370,11 +370,13 @@ public final class Board {
     }
 
     private boolean validMove(Piece piece, Coordinate destination) {
+
         Side side = piece.getSide();
 
         //bad style
         //checking if piece is pawn, because pawns can't capture moving vertically.
         if ((piece instanceof Pawn) && (board.containsKey(destination))) {
+
             return false;
         }
 

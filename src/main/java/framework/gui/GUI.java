@@ -35,13 +35,17 @@ public class GUI {
         return selected;
     }
 
+    public static boolean hasSelected() {
+        return (selected != null);
+    }
+
     public static void setSelected(Coordinate selected) {
         GUI.selected = selected;
     }
 
     private static void updateBoard() {
 
-        System.out.println("here");
+        System.out.println(selected);
 
         boardPanel = new JPanel(new GridLayout(9,9));
 

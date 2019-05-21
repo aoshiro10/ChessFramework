@@ -21,12 +21,17 @@ public class TileButton extends JButton {
     public void update(Chess chess) {
 
         Board board = chess.getBoard();
+        System.out.println(coordinate);
 
         //Piece Image
         if (board.hasPiece(coordinate)) {
             Piece piece = board.getPiece(coordinate);
             setImage(piece);
+        } else {
+            this.setIcon(null);
         }
+
+
 
         Coordinate selected = GUI.getSelected();
 
@@ -52,6 +57,13 @@ public class TileButton extends JButton {
 
 
                 this.setEnabled(false);
+
+                addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                    }
+                });
+
             }
 
 
@@ -59,10 +71,10 @@ public class TileButton extends JButton {
 
             this.setEnabled(true);
 
-            this.setEnabled(true);
             addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    System.out.println("here");
                     GUI.setSelected(null);
                     chess.updateAll();
                 }
@@ -71,6 +83,7 @@ public class TileButton extends JButton {
         } else {
 
             Piece selectedPiece = board.getPiece(selected);
+            System.out.println(selectedPiece);
             List<Move> availableMoves = board.getValidMoves(selectedPiece);
 
             for (Move move : availableMoves) {
@@ -80,6 +93,7 @@ public class TileButton extends JButton {
                     addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
+                            GUI.setSelected(null);
                             chess.move(move);
                             chess.updateAll();
                         }
