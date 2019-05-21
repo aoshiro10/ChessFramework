@@ -89,7 +89,7 @@ public class King extends Piece {
         //Castling
         if (initPos) {
 
-            int tempCol5 = 2;
+            int tempCol5 = 1;
             int tempCol6 = 6;
 
             Coordinate tempCoordinate5 = new Coordinate(row, tempCol5);

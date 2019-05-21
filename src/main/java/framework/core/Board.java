@@ -292,12 +292,23 @@ public final class Board {
 
             if (direction.equals(Direction.Castling)) {
                 King king = (King) piece;
+
                 for (Coordinate destination : directionMoves) {
-                    if (validCastling(king, destination)) {
+
+                    int rookRow = destination.getRow();
+                    int rookCol;
+
+                    if (destination.getCol() == 6) {
+                        rookCol = 7;
+                    } else {
+                        rookCol = 0;
+                    }
+
+                    Coordinate rookCoor = new Coordinate(rookRow, rookCol);
+
+                    if (validCastling(king, rookCoor)) {
                         Move tempMove = new Move(piece.getCoordinate(), destination, direction);
-
                         Board tempBoard = this.move(tempMove);
-
                         if (!tempBoard.isCheck(side)) {
                             moves.add(tempMove);
                         }
@@ -396,21 +407,33 @@ public final class Board {
 
     private boolean validCastling(King king, Coordinate destination) {
 
+        System.out.println(destination);
+
+        Side side = king.getSide();
+        if (this.isCheck(side)) {
+            System.out.println("test1");
+            return false;
+        }
+
         if (board.containsKey(destination)) {
             Piece destPiece = board.get(destination);
             if (!destPiece.getSide().equals(king.getSide())){
+                System.out.println("test2");
                 return false;
             }
             if (!(destPiece instanceof Rook)) {
+                System.out.println("test3");
                 return false;
             } else {
                 Rook rook = (Rook) destPiece;
                 if (!rook.getInitPos()) {
+                    System.out.println("test4");
                     return false;
                 }
             }
 
         } else {
+            System.out.println("test5");
             return false;
         }
 
@@ -426,6 +449,7 @@ public final class Board {
 
             Coordinate tempCoor = new Coordinate(row, tempCol);
             if (board.containsKey(tempCoor)) {
+                System.out.println("test6");
                 return false;
             }
 
@@ -466,21 +490,32 @@ public final class Board {
 
         if (direction.equals(Direction.Castling)) {
 
-            Piece rook = newBoard.board.get(destCoor);
             int row = piece.getCoordinate().getRow();
-            int rootCol;
-            if (destCoor.getCol() == 7) {
-                rootCol = 5;
+            int rookOriginCol;
+
+            if (destCoor.getCol() == 6) {
+                rookOriginCol = 7;
             } else {
-                rootCol = 2;
+                rookOriginCol = 0;
+            }
+            Coordinate rookOrigin = new Coordinate(row, rookOriginCol);
+
+            Piece rook = newBoard.board.get(rookOrigin);
+
+            int rookDestCol;
+            if (destCoor.getCol() == 6) {
+                rookDestCol = 5;
+            } else {
+                rookDestCol = 2;
             }
 
-            Coordinate rootDist = new Coordinate(row, rootCol);
+            Coordinate rootDist = new Coordinate(row, rookDestCol);
 
-            newBoard.board.remove(destCoor);
+            newBoard.board.remove(rookOrigin);
             newBoard.board.put(rootDist, rook);
             rook.setCoordinate(rootDist);
             rook.setInitPos(false);
+
 
         }
 
