@@ -407,33 +407,26 @@ public final class Board {
 
     private boolean validCastling(King king, Coordinate destination) {
 
-        System.out.println(destination);
-
         Side side = king.getSide();
         if (this.isCheck(side)) {
-            System.out.println("test1");
             return false;
         }
 
         if (board.containsKey(destination)) {
             Piece destPiece = board.get(destination);
             if (!destPiece.getSide().equals(king.getSide())){
-                System.out.println("test2");
                 return false;
             }
             if (!(destPiece instanceof Rook)) {
-                System.out.println("test3");
                 return false;
             } else {
                 Rook rook = (Rook) destPiece;
                 if (!rook.getInitPos()) {
-                    System.out.println("test4");
                     return false;
                 }
             }
 
         } else {
-            System.out.println("test5");
             return false;
         }
 
@@ -449,7 +442,6 @@ public final class Board {
 
             Coordinate tempCoor = new Coordinate(row, tempCol);
             if (board.containsKey(tempCoor)) {
-                System.out.println("test6");
                 return false;
             }
 
@@ -485,7 +477,16 @@ public final class Board {
         Coordinate destCoor = move.getDestPos();
         Direction direction = move.getDirection();
 
+        int destRow = destCoor.getRow();
+
         Piece piece = newBoard.board.get(initCoor);
+
+        //change pawn to queen
+        if ((destRow == 0 || destRow == 7) && (piece instanceof Pawn)) {
+            piece = new Queen(piece.getSide(), piece.getCoordinate());
+        }
+
+
         newBoard.board.remove(initCoor);
 
         if (direction.equals(Direction.Castling)) {

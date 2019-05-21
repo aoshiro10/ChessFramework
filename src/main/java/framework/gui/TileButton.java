@@ -36,6 +36,14 @@ public class TileButton extends JButton implements Listener{
             removeActionListener(actionListener);
         }
 
+
+        if (chess.gameOver()) {
+
+            this.setEnabled(true);
+            return;
+
+        }
+
         if (GUI.hasSelected()) {
 
             Coordinate selected = GUI.getSelected();
@@ -87,7 +95,6 @@ public class TileButton extends JButton implements Listener{
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             GUI.setSelected(coordinate);
-                            System.out.println(GUI.getSelected());
                             chess.updateAll();
                         }
                     });

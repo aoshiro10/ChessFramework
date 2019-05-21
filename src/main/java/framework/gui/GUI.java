@@ -39,8 +39,6 @@ public class GUI {
 
     private static void updateBoard() {
 
-        System.out.println(selected);
-
         boardPanel = new JPanel(new GridLayout(9,9));
 
         for (int row = 0; row < 9; row ++){
@@ -61,8 +59,6 @@ public class GUI {
 
     }
 
-
-
     private static void updateSideLabels(int row, int col) {
         JLabel label;
         if (col == 8) {
@@ -70,7 +66,6 @@ public class GUI {
         } else {
             label = new JLabel(Integer.toString(col + 1), SwingConstants.CENTER);
         }
-
         boardPanel.add(label);
     }
 
