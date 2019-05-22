@@ -22,6 +22,7 @@ public class GUI {
         jFrame.setVisible(true);
         updateBoard();
         jFrame.add(boardPanel);
+        chess.init();
     }
 
 
@@ -54,9 +55,7 @@ public class GUI {
                 }
             }
         }
-        chess.updateAll();
         jFrame.revalidate();
-
     }
 
     private static void updateSideLabels(int row, int col) {

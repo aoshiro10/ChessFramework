@@ -11,20 +11,48 @@ public class Chess {
     private Board board;
     private List<Listener> listeners;
 
+    private final Player whitePlayer;
+    private final Player blackPlayer;
 
-    public Chess() {
-        listeners = new ArrayList<>();
-        board = new Board();
-        side = Side.White;
+    public Chess(Player whitePlayer, Player blackPlayer) {
+        this.whitePlayer = whitePlayer;
+        this.blackPlayer = blackPlayer;
+        this.listeners = new ArrayList<>();
+        this.board = new Board();
+        this.side = Side.White;
+    }
+
+
+    public void init() {
+        pluginMove();
+        updateAll();
     }
 
     public Board getBoard() {
         return board;
     }
 
+    private void pluginMove() {
+
+        if (this.side.equals(Side.White) && whitePlayer != null) {
+            Move move = whitePlayer.chooseMove(this.board);
+            this.move(move);
+        } else if (this.side.equals(Side.Black) && blackPlayer != null){
+            Move move = whitePlayer.chooseMove(this.board);
+            this.move(move);
+        }
+
+    }
+
     public void move(Move move) {
         this.board = this.board.move(move);
         this.side = switchSide(side);
+        updateAll();
+
+        if (!gameOver()) {
+            pluginMove();
+        }
+
     }
 
     private Side switchSide(Side side) {

@@ -1,22 +1,29 @@
 package plugin;
 
-import framework.core.Board;
-import framework.core.Coordinate;
-import framework.core.Move;
+import framework.core.*;
 import framework.core.Pieces.*;
-import framework.core.Side;
 
 import java.util.List;
 
 public class AlphaBeta implements Player {
 
     private final Side side;
+    private final int depth;
 
-    public AlphaBeta(Side side) {
+    private final int MAX = 1000000;
+    private final int MIN = -1000000;
+
+    public AlphaBeta(Side side, int depth) {
         this.side = side;
-
+        this.depth = depth;
     }
 
+    @Override
+    public Side getSide() {
+        return side;
+    }
+
+    @Override
     public Move chooseMove(Board board) {
 
         List<Move> moves = board.getValidMoves(this.side);
@@ -38,28 +45,66 @@ public class AlphaBeta implements Player {
         return bestMove;
     }
 
+
+//    private Move alphaBeta(Board board, int depth, boolean maximizing, int alpha, int beta) {
+//
+//        if (depth == this.depth) {
+//
+//            List<Move> moves = board.getValidMoves(this.side);
+//
+//            return moves.get(0);
+//        }
+//
+//        if (maximizing) {
+//
+//            int best = MIN;
+//
+//            for (int i = 0; i < moves.size(); i++) {
+//
+//                Move tempMove = moves.get(i);
+//
+//                List<Move> tempMoves = board.move(tempMove);
+//
+//                Move resultMove = alphaBeta(depth + 1, false, alpha, beta, )
+//
+//            }
+//
+//        } else {
+//
+//
+//
+//        }
+//
+//
+//
+//    }
+
     private int boardScore(Board board) {
 
         int score = 0;
 
         List<Piece> pieces = board.getPieces(this.side);
 
-        Side oppenent;
+        Side opponent;
         if (this.side.equals(Side.White)) {
-            oppenent = Side.Black;
+            opponent = Side.Black;
         } else {
-            oppenent = Side.White;
+            opponent = Side.White;
         }
 
-        List<Piece> opponents = board.getPieces(oppenent);
+        List<Piece> opponents = board.getPieces(opponent);
 
 
         for (Piece piece : pieces) {
             score += pieceScore(piece);
         }
 
-        for (Piece opponent : opponents) {
-            score -= pieceScore(opponent);
+        for (Piece opponentPiece : opponents) {
+            score -= pieceScore(opponentPiece);
+        }
+
+        if (board.isCheck(opponent)) {
+            score += 10000;
         }
 
         return score;
@@ -67,10 +112,20 @@ public class AlphaBeta implements Player {
 
 
     private int pieceScore(Piece piece) {
+
+        Coordinate coordinate = piece.getCoordinate();
+        Side side = piece.getSide();
+
         int score = 0;
         //Pawn
         if (piece instanceof Pawn) {
             score = 10;
+            if (side.equals(Side.White)) {
+                score += (7 - coordinate.getRow());
+            } else {
+                score += coordinate.getRow();
+            }
+
         }
 
         //Knight
@@ -93,13 +148,7 @@ public class AlphaBeta implements Player {
             score = 1000000;
         }
 
-        Coordinate coordinate = piece.getCoordinate();
-        Side side = piece.getSide();
-        if (side.equals(Side.White)) {
-            score += (7 - coordinate.getRow());
-        } else {
-            score += coordinate.getRow();
-        }
+
 
         return score;
     }
