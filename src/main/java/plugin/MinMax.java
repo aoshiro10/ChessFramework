@@ -5,7 +5,7 @@ import framework.core.Pieces.*;
 
 import java.util.List;
 
-public class AlphaBeta implements Player {
+public class MinMax implements Player {
 
     private final Side side;
     private final int depth;
@@ -13,7 +13,7 @@ public class AlphaBeta implements Player {
     private final int MAX = 1000000;
     private final int MIN = -1000000;
 
-    public AlphaBeta(Side side, int depth) {
+    public MinMax(Side side, int depth) {
         this.side = side;
         this.depth = depth;
     }
@@ -34,7 +34,10 @@ public class AlphaBeta implements Player {
         for (Move move : moves) {
 
             Board tempBoard = board.move(move);
-            int tempScore = boardScore(tempBoard);
+            int tempScore = minMax(tempBoard, depth, this.side);
+            if (this.side.equals(Side.Black)) {
+                tempScore = -tempScore;
+            }
 
             if ((bestMove == null) || (tempScore > max)) {
                 bestMove = move;
@@ -46,44 +49,63 @@ public class AlphaBeta implements Player {
     }
 
 
-//    private Move alphaBeta(Board board, int depth, boolean maximizing, int alpha, int beta) {
-//
-//        if (depth == this.depth) {
-//
-//            List<Move> moves = board.getValidMoves(this.side);
-//
-//            return moves.get(0);
-//        }
-//
-//        if (maximizing) {
-//
-//            int best = MIN;
-//
-//            for (int i = 0; i < moves.size(); i++) {
-//
-//                Move tempMove = moves.get(i);
-//
-//                List<Move> tempMoves = board.move(tempMove);
-//
-//                Move resultMove = alphaBeta(depth + 1, false, alpha, beta, )
-//
-//            }
-//
-//        } else {
-//
-//
-//
-//        }
-//
-//
-//
-//    }
+    private int minMax(Board board, int depth, Side side) {
+
+        if (board.isCheck(side) || depth == 0) {
+            return boardScore(board);
+        }
+
+        if (side.equals(Side.White)) { //max
+
+            int tempMax = MIN;
+            List<Move> moves = board.getValidMoves(side);
+
+            for (Move move : moves) {
+
+                Board tempBoard = board.move(move);
+                int tempResult = minMax(tempBoard, depth - 1, opponent(side));
+                tempMax = Math.max(tempMax, tempResult);
+
+            }
+            return tempMax;
+        } else { //min
+
+            int tempMin = MAX;
+            List<Move> moves = board.getValidMoves(side);
+
+            for (Move move : moves) {
+                Board tempBoard = board.move(move);
+                int tempResult = minMax(tempBoard, depth - 1, opponent(side));
+                tempMin = Math.min(tempMin, tempResult);
+
+            }
+            return tempMin;
+
+        }
+
+    }
+
+
+
+    private Side opponent(Side side) {
+        if (side.equals(Side.White)) {
+            return Side.Black;
+        }
+        return Side.White;
+    }
+
 
     private int boardScore(Board board) {
 
+        return sideScore(board, Side.White) - sideScore(board, Side.Black);
+
+    }
+
+    private int sideScore(Board board, Side side) {
+
         int score = 0;
 
-        List<Piece> pieces = board.getPieces(this.side);
+        List<Piece> pieces = board.getPieces(side);
 
         Side opponent;
         if (this.side.equals(Side.White)) {

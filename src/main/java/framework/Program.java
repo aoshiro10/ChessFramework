@@ -4,7 +4,7 @@ import framework.core.Chess;
 import framework.core.Player;
 import framework.core.Side;
 import framework.gui.GUI;
-import plugin.AlphaBeta;
+import plugin.MinMax;
 
 import javax.swing.*;
 
@@ -15,8 +15,8 @@ public class Program {
 
     private static void showGui() {
 
-        Player whitePlayer = new AlphaBeta(Side.White, 3);
-        Player blackPlayer = new AlphaBeta(Side.Black, 3);
+        Player whitePlayer = new MinMax(Side.White, 2);
+        Player blackPlayer = new MinMax(Side.Black, 2);
 
         new GUI(new Chess(whitePlayer, blackPlayer));
 
