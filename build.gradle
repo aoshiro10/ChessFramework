@@ -1,6 +1,5 @@
-plugins {
-    id 'java'
-}
+apply plugin: 'application'
+
 
 version '1.0-SNAPSHOT'
 
@@ -17,3 +16,5 @@ dependencies {
 test.testLogging {
     exceptionFormat "full"; events "failed", "passed", "skipped"
 }
+
+mainClassName = "framework.Program"

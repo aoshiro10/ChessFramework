@@ -2,6 +2,7 @@ package framework.core;
 
 import framework.gui.Listener;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class Chess {
             Move move = whitePlayer.chooseMove(this.board);
             this.move(move);
         } else if (this.side.equals(Side.Black) && blackPlayer != null){
-            Move move = whitePlayer.chooseMove(this.board);
+            Move move = blackPlayer.chooseMove(this.board);
             this.move(move);
         }
 

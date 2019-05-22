@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="framework.core.Pieces.PawnTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-05-19T02:15:53" hostname="Albertos-MacBook-Air.local" time="0.005">
+<testsuite name="framework.core.Pieces.PawnTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-05-22T04:51:41" hostname="Albertos-MacBook-Air.local" time="0.005">
   <properties/>
-  <testcase name="getPossibleMoves" classname="framework.core.Pieces.PawnTest" time="0.004"/>
+  <testcase name="getPossibleMoves" classname="framework.core.Pieces.PawnTest" time="0.001"/>
   <testcase name="string" classname="framework.core.Pieces.PawnTest" time="0.001"/>
-  <testcase name="copy" classname="framework.core.Pieces.PawnTest" time="0.0"/>
+  <testcase name="copy" classname="framework.core.Pieces.PawnTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
