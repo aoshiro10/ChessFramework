@@ -528,6 +528,19 @@ public final class Board {
 
     }
 
+    public boolean checkMate(Side side) {
+
+        List<Piece> pieces = this.getPieces(side);
+
+        for (Piece piece : pieces) {
+            if (!this.getValidMoves(piece).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
     public List<Piece> getPieces(Side side) {
 
         List<Piece> pieces = new ArrayList<>();
