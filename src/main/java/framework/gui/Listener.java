@@ -6,4 +6,6 @@ public interface Listener {
 
     void update(Chess chess);
 
+    void init(Chess chess);
+
 }

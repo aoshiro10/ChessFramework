@@ -22,7 +22,8 @@ public class GUI {
         jFrame.setVisible(true);
         updateBoard();
         jFrame.add(boardPanel);
-        chess.init();
+        //chess.updateAll();
+        //chess.init();
     }
 
 
@@ -51,6 +52,7 @@ public class GUI {
                 } else {
                     TileButton tileButton = new TileButton(new Coordinate(row, col));
                     boardPanel.add(tileButton);
+                    tileButton.update(chess);
                     chess.addListener(tileButton);
                 }
             }
@@ -69,8 +71,9 @@ public class GUI {
     }
 
     private static void updateCurrentPlayerLabel() {
-        PlayerLabel label = new PlayerLabel("Turn: " + chess.getSide().toString(), SwingConstants.CENTER);
+        PlayerLabel label = new PlayerLabel();
         boardPanel.add(label);
+        label.init(chess);
         chess.addListener(label);
     }
 

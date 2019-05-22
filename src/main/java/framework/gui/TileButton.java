@@ -18,6 +18,12 @@ public class TileButton extends JButton implements Listener{
         this.coordinate = coordinate;
     }
 
+
+    @Override
+    public void init(Chess chess) {
+
+    }
+
     public void update(Chess chess) {
 
         Board board = chess.getBoard();
@@ -44,13 +50,15 @@ public class TileButton extends JButton implements Listener{
 
         }
 
-        if (GUI.hasSelected()) {
+        Player player = chess.getPlayer(chess.getSide());
+
+
+        if ((GUI.hasSelected()) && (player != null)) {
 
             Coordinate selected = GUI.getSelected();
             Piece selectedPiece = board.getPiece(selected);
             List<Move> availableMoves = board.getValidMoves(selectedPiece);
             Move currentMove = findMove(availableMoves);
-
 
             if (this.coordinate.equals(selected)) {
 
@@ -77,6 +85,8 @@ public class TileButton extends JButton implements Listener{
                     }
                 });
 
+            } else if (board.hasPiece(this.coordinate)) {
+                this.setEnabled(true);
             } else {
                 this.setEnabled(false);
             }
@@ -91,14 +101,19 @@ public class TileButton extends JButton implements Listener{
                 if (pieceSide.equals(side)) {
 
                     this.setEnabled(true);
-                    addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            GUI.setSelected(coordinate);
-                            chess.updateAll();
-                        }
-                    });
 
+                    if (chess.getStarted()) {
+                        addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                GUI.setSelected(coordinate);
+                                chess.updateAll();
+                            }
+                        });
+                    }
+
+                } else if (board.hasPiece(this.coordinate)) {
+                    this.setEnabled(true);
                 } else {
                     this.setEnabled(false);
                 }

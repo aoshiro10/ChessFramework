@@ -7,7 +7,6 @@ import framework.gui.GUI;
 import plugin.AlphaBeta;
 
 import javax.swing.*;
-import java.lang.reflect.InvocationTargetException;
 
 public class Program {
 
@@ -16,7 +15,7 @@ public class Program {
 
     private static void showGui() {
 
-        Player whitePlayer = null;
+        Player whitePlayer = new AlphaBeta(Side.White, 3);
         Player blackPlayer = new AlphaBeta(Side.Black, 3);
 
         new GUI(new Chess(whitePlayer, blackPlayer));

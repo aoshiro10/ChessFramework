@@ -5,17 +5,20 @@ import framework.gui.Listener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Chess {
 
     private Side side;
     private Board board;
     private List<Listener> listeners;
+    private boolean started;
 
     private final Player whitePlayer;
     private final Player blackPlayer;
 
     public Chess(Player whitePlayer, Player blackPlayer) {
+        this.started = false;
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
         this.listeners = new ArrayList<>();
@@ -24,9 +27,28 @@ public class Chess {
     }
 
 
+    public Player getPlayer(Side side) {
+        if (side.equals(Side.White)) {
+            return whitePlayer;
+        }
+        return blackPlayer;
+    }
+
+
+    public boolean getStarted() {
+        return this.started;
+    }
+
     public void init() {
-        pluginMove();
+        this.started = true;
+
+        nextMove();
+
+    }
+
+    private void nextMove() {
         updateAll();
+        pluginMove();
     }
 
     public Board getBoard() {
@@ -35,24 +57,24 @@ public class Chess {
 
     private void pluginMove() {
 
-        if (this.side.equals(Side.White) && whitePlayer != null) {
-            Move move = whitePlayer.chooseMove(this.board);
-            this.move(move);
-        } else if (this.side.equals(Side.Black) && blackPlayer != null){
-            Move move = blackPlayer.chooseMove(this.board);
-            this.move(move);
+        if (this.started) {
+            if (this.side.equals(Side.White) && whitePlayer != null) {
+                Move move = whitePlayer.chooseMove(this.board);
+                this.move(move);
+            } else if (this.side.equals(Side.Black) && blackPlayer != null){
+                Move move = blackPlayer.chooseMove(this.board);
+                this.move(move);
+            }
         }
 
     }
 
     public void move(Move move) {
+
         this.board = this.board.move(move);
-        this.side = switchSide(side);
         updateAll();
 
-        if (!gameOver()) {
-            pluginMove();
-        }
+        this.side = switchSide(side);
 
     }
 
