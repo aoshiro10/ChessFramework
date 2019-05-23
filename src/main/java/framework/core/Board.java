@@ -473,8 +473,8 @@ public final class Board {
         newBoard.board.put(whiteKing.getCoordinate(), whiteKing);
 
 
-        Coordinate initCoor = move.getInitPos();
-        Coordinate destCoor = move.getDestPos();
+        Coordinate initCoor = move.getInitCoor();
+        Coordinate destCoor = move.getDestCoor();
         Direction direction = move.getDirection();
 
         int destRow = destCoor.getRow();

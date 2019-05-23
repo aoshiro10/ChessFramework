@@ -11,14 +11,14 @@ import javax.swing.*;
 
 public class Program {
 
-    public Program() {
-    }
-
     private static void showGui() {
 
         Player whitePlayer = new AlphaBeta(Side.White, 2);
-        Player blackPlayer = new AlphaBeta(Side.Black, 4);
-        new GUI(new Chess(whitePlayer, blackPlayer));
+        Player blackPlayer = new AlphaBeta(Side.Black, 2);
+
+        Chess chess = new Chess(whitePlayer, blackPlayer);
+
+        new GUI(chess);
 
     }
 

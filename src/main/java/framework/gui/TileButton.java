@@ -18,52 +18,74 @@ public class TileButton extends JButton implements Listener{
         this.coordinate = coordinate;
     }
 
-
     @Override
     public void init(Chess chess) {
-
+        Board board = chess.getBoard();
+        setImage(board);
     }
 
+    @Override
     public void update(Chess chess) {
 
         Board board = chess.getBoard();
-        Side side = chess.getSide();
 
-        //Piece Image
-        if (board.hasPiece(coordinate)) {
-            Piece piece = board.getPiece(coordinate);
-            setImage(piece);
-        } else {
-            this.setIcon(null);
-        }
-
-        ActionListener[] actionListeners = this.getActionListeners();
-        for (ActionListener actionListener : actionListeners) {
-            removeActionListener(actionListener);
-        }
-
+        cleanButton();
+        setImage(board);
 
         if (chess.gameOver()) {
-
             this.setEnabled(true);
             return;
-
         }
 
+        if (GUI.hasSelected()) {
+            updateHelperSelected(chess);
+        } else {
+            updateHelperUnselected(chess);
+        }
+
+        this.repaint();
+    }
+
+    private void updateHelperUnselected(Chess chess) {
+
+        Board board = chess.getBoard();
+        this.setEnabled(true);
+        Side side = chess.getSide();
+        Player player = chess.getPlayer(side);
+
+        if (board.hasPiece(this.coordinate)) {
+
+            Piece piece = board.getPiece(this.coordinate);
+
+            if ((piece.getSide().equals(side)) && (player == null)) {
+
+                addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        GUI.setSelected(coordinate);
+                        chess.updateAll();
+                    }
+                });
+
+            }
+        }
+    }
+
+    private void updateHelperSelected(Chess chess) {
+
+        Board board = chess.getBoard();
         Player player = chess.getPlayer(chess.getSide());
 
+        Coordinate selected = GUI.getSelected();
+        Piece selectedPiece = board.getPiece(selected);
+        List<Move> availableMoves = board.getValidMoves(selectedPiece);
+        Move currentMove = findMove(availableMoves);
 
-        if ((GUI.hasSelected()) && (player != null)) {
+        if (this.coordinate.equals(selected)) { //current button is selected
 
-            Coordinate selected = GUI.getSelected();
-            Piece selectedPiece = board.getPiece(selected);
-            List<Move> availableMoves = board.getValidMoves(selectedPiece);
-            Move currentMove = findMove(availableMoves);
+            this.setEnabled(true);
 
-            if (this.coordinate.equals(selected)) {
-
-                this.setEnabled(true);
-
+            if (player == null) {
                 addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -71,84 +93,65 @@ public class TileButton extends JButton implements Listener{
                         chess.updateAll();
                     }
                 });
+            }
 
-            } else if (currentMove != null) {
+            return;
+        }
 
-                this.setEnabled(true);
+        if (currentMove != null) { //current button is possible move
 
+            this.setEnabled(true);
+
+            if (player == null) {
                 addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         GUI.setSelected(null);
                         chess.move(currentMove);
-                        chess.updateAll();
+
+                        chess.nextTurn();
                     }
                 });
-
-            } else if (board.hasPiece(this.coordinate)) {
-                this.setEnabled(true);
-            } else {
-                this.setEnabled(false);
             }
-
-        } else {
-
-            if (board.hasPiece(this.coordinate)) {
-
-                Piece piece = board.getPiece(this.coordinate);
-                Side pieceSide = piece.getSide();
-
-                if (pieceSide.equals(side)) {
-
-                    this.setEnabled(true);
-
-                    if (chess.getStarted()) {
-                        addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                GUI.setSelected(coordinate);
-                                chess.updateAll();
-                            }
-                        });
-                    }
-
-                } else if (board.hasPiece(this.coordinate)) {
-                    this.setEnabled(true);
-                } else {
-                    this.setEnabled(false);
-                }
-
-            } else {
-                this.setEnabled(false);
-            }
-
         }
-
 
     }
 
     private Move findMove(List<Move> moves) {
-
         for (Move move : moves) {
-            Coordinate destination = move.getDestPos();
+            Coordinate destination = move.getDestCoor();
             if (this.coordinate.equals(destination)) {
                 return move;
             }
         }
-
         return null;
 
     }
 
-    private void setImage(Piece piece) {
-        Image img = null;
-        try {
-            img = piece.getImage(piece.getSide());
-        } catch (IOException e) {
-            e.printStackTrace();
+    private void setImage(Board board) {
+
+        if (board.hasPiece(coordinate)) {
+            Piece piece = board.getPiece(coordinate);
+            Image img = null;
+            try {
+                img = piece.getImage(piece.getSide());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            this.setIcon(new ImageIcon(img));
+        } else {
+            this.setIcon(null);
         }
-        this.setIcon(new ImageIcon(img));
     }
 
+    private void cleanButton() {
+
+        ActionListener[] actionListeners = this.getActionListeners();
+        for (ActionListener actionListener : actionListeners) {
+            removeActionListener(actionListener);
+        }
+        this.setEnabled(false);
+
+    }
 
 }

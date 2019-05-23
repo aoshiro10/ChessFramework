@@ -2,10 +2,8 @@ package framework.core;
 
 import framework.gui.Listener;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Chess {
 
@@ -42,13 +40,13 @@ public class Chess {
     public void init() {
         this.started = true;
 
-        nextMove();
+        nextTurn();
 
     }
 
-    private void nextMove() {
-        updateAll();
+    public void nextTurn() {
         pluginMove();
+        updateAll();
     }
 
     public Board getBoard() {
@@ -57,25 +55,18 @@ public class Chess {
 
     private void pluginMove() {
 
-        if (this.started) {
-            if (this.side.equals(Side.White) && whitePlayer != null) {
-                Move move = whitePlayer.chooseMove(this.board);
-                this.move(move);
-            } else if (this.side.equals(Side.Black) && blackPlayer != null){
-                Move move = blackPlayer.chooseMove(this.board);
-                this.move(move);
-            }
+        Player player = getPlayer(this.side);
+        if (player != null) {
+            Move move = player.chooseMove(this.board);
+            this.board = this.board.move(move);
+            this.side = switchSide(side);
         }
 
     }
 
     public void move(Move move) {
-
         this.board = this.board.move(move);
-        updateAll();
-
         this.side = switchSide(side);
-
     }
 
     private Side switchSide(Side side) {

@@ -52,8 +52,8 @@ public class GUI {
                 } else {
                     TileButton tileButton = new TileButton(new Coordinate(row, col));
                     boardPanel.add(tileButton);
-                    tileButton.update(chess);
                     chess.addListener(tileButton);
+                    tileButton.init(chess);
                 }
             }
         }
@@ -73,8 +73,8 @@ public class GUI {
     private static void updateCurrentPlayerLabel() {
         PlayerLabel label = new PlayerLabel();
         boardPanel.add(label);
-        label.init(chess);
         chess.addListener(label);
+        label.init(chess);
     }
 
     private static JFrame gameFrame() {

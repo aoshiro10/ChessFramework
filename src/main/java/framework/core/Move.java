@@ -12,11 +12,11 @@ public class Move {
         this.destPos = destPos;
     }
 
-    public Coordinate getDestPos() {
+    public Coordinate getDestCoor() {
         return destPos;
     }
 
-    public Coordinate getInitPos() {
+    public Coordinate getInitCoor() {
         return initPos;
     }
 
