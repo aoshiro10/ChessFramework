@@ -13,8 +13,8 @@ public class Program {
 
     private static void showGui() {
 
-        Player whitePlayer = new AlphaBeta(Side.White, 2);
-        Player blackPlayer = new AlphaBeta(Side.Black, 2);
+        Player whitePlayer = null;
+        Player blackPlayer = null;
 
         Chess chess = new Chess(whitePlayer, blackPlayer);
 

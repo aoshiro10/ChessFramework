@@ -131,7 +131,7 @@ public class AlphaBeta implements Player {
             score += 30;
         }
 
-        if (board.checkMate(opponent)) {
+        if (board.isCheckMate(opponent)) {
             score += 100000;
         }
 

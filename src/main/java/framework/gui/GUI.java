@@ -5,27 +5,20 @@ import framework.core.Coordinate;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class GUI {
 
     private static JFrame jFrame;
     private static Chess chess;
-    private static JPanel boardPanel;
 
     private static Coordinate selected;
-    private static List<TileButton> tiles;
 
     public GUI(Chess chess) {
         GUI.chess = chess;
         jFrame = gameFrame();
         jFrame.setVisible(true);
-        updateBoard();
-        jFrame.add(boardPanel);
-        //chess.updateAll();
-        //chess.init();
+        initBoard();
     }
-
 
     public static Coordinate getSelected() {
         return selected;
@@ -39,16 +32,16 @@ public class GUI {
         GUI.selected = selected;
     }
 
-    private static void updateBoard() {
+    private static void initBoard() {
 
-        boardPanel = new JPanel(new GridLayout(9,9));
-
+        JPanel boardPanel = new JPanel(new GridLayout(9,9));
+        boardPanel.setSize(700, 700);
         for (int row = 0; row < 9; row ++){
             for (int col = 0; col < 9; col++) {
                 if (row == 8 && col == 8) {
-                    updateCurrentPlayerLabel();
+                    boardPanel.add(updateCurrentPlayerLabel());
                 } else if (row == 8 || col == 8) {
-                    updateSideLabels(row, col);
+                    boardPanel.add(updateSideLabels(row, col));
                 } else {
                     TileButton tileButton = new TileButton(new Coordinate(row, col));
                     boardPanel.add(tileButton);
@@ -57,24 +50,25 @@ public class GUI {
                 }
             }
         }
-        jFrame.revalidate();
+        jFrame.add(boardPanel);
+
     }
 
-    private static void updateSideLabels(int row, int col) {
+    private static JLabel updateSideLabels(int row, int col) {
         JLabel label;
         if (col == 8) {
             label = new JLabel(Character.toString((char) (row + 65)), SwingConstants.CENTER);
         } else {
             label = new JLabel(Integer.toString(col + 1), SwingConstants.CENTER);
         }
-        boardPanel.add(label);
+        return label;
     }
 
-    private static void updateCurrentPlayerLabel() {
+    private static PlayerLabel updateCurrentPlayerLabel() {
         PlayerLabel label = new PlayerLabel();
-        boardPanel.add(label);
         chess.addListener(label);
         label.init(chess);
+        return label;
     }
 
     private static JFrame gameFrame() {

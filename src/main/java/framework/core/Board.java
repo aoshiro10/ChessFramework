@@ -528,7 +528,11 @@ public final class Board {
 
     }
 
-    public boolean checkMate(Side side) {
+    public boolean isCheckMate(Side side) {
+
+        if (!isCheck(side)) {
+            return false;
+        }
 
         List<Piece> pieces = this.getPieces(side);
 

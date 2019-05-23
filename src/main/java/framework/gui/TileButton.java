@@ -108,7 +108,6 @@ public class TileButton extends JButton implements Listener{
                     public void actionPerformed(ActionEvent e) {
                         GUI.setSelected(null);
                         chess.move(currentMove);
-
                         chess.nextTurn();
                     }
                 });

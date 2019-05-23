@@ -24,7 +24,6 @@ public class Chess {
         this.side = Side.White;
     }
 
-
     public Player getPlayer(Side side) {
         if (side.equals(Side.White)) {
             return whitePlayer;
@@ -32,20 +31,15 @@ public class Chess {
         return blackPlayer;
     }
 
-
-    public boolean getStarted() {
-        return this.started;
-    }
-
     public void init() {
         this.started = true;
-
         nextTurn();
-
     }
 
     public void nextTurn() {
-        pluginMove();
+        if (!gameOver()) {
+            pluginMove();
+        }
         updateAll();
     }
 
@@ -91,7 +85,7 @@ public class Chess {
     }
 
     public boolean gameOver() {
-        return (getMoves().isEmpty());
+        return board.getValidMoves(side).isEmpty();
     }
 
     public Side getWinner() {
