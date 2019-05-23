@@ -18,20 +18,37 @@ import static framework.core.Direction.*;
 import static framework.core.Direction.SouthWest;
 import static java.util.Objects.hash;
 
+/**
+ * Object representing a queen piece.
+ */
 public class Queen extends Piece {
 
-    private final String name = "Queen";
+    private final String NAME = "Queen";
 
-    @Override
-    public String getPieceName() {
-        return name;
-    }
-
-    public Queen(Side side, Coordinate coordinate) {
+    /**
+     * Constructor for the piece.
+     * @param side piece color
+     * @param coordinate location on the board
+     */
+    public Queen(final Side side, final Coordinate coordinate) {
         super(side, coordinate);
     }
 
+    /**
+     * Returns the NAME of the piece.
+     * @return NAME of the piece
+     */
+    @Override
+    public String getPieceName() {
+        return NAME;
+    }
 
+    /**
+     * Creates a map with all the possible move destinations.
+     * Each move destination is mapped from a direction.
+     * i.e. if the destination is a move east, it will be under the east key.
+     * @return map with directions mapping to destination coordinates
+     */
     @Override
     public Map<Direction, List<Coordinate>> getPossibleMoves() {
         Map<Direction, List<Coordinate>> moves = new HashMap<>();
@@ -85,9 +102,9 @@ public class Queen extends Piece {
         }
 
         //North East
-        int movesNE = Math.min(row, Math.abs(col-Board.getCols())-1);
+        int movesNE = Math.min(row, Math.abs(col - Board.getCols()) - 1);
         List<Coordinate> movesNorthEast = new ArrayList<>();
-        for (int moveNE = 1; moveNE <= movesNE; moveNE++){
+        for (int moveNE = 1; moveNE <= movesNE; moveNE++) {
             int tempRow = row - moveNE;
             int tempCol = col + moveNE;
             Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
@@ -114,7 +131,9 @@ public class Queen extends Piece {
 
         //South East
         List<Coordinate> movesSouthEast = new ArrayList<>();
-        int movesSE = Math.min(Math.abs(row-Board.getRows())-1, Math.abs(col-Board.getCols())-1);
+        int deltaRow = Math.abs(row - Board.getRows()) - 1;
+        int deltaCol = Math.abs(col - Board.getCols()) - 1;
+        int movesSE = Math.min(deltaRow, deltaCol);
         for (int moveSE = 1; moveSE <= movesSE; moveSE++) {
             int tempRow = row + moveSE;
             int tempCol = col + moveSE;
@@ -129,7 +148,8 @@ public class Queen extends Piece {
 
         //South West
         List<Coordinate> movesSouthWest = new ArrayList<>();
-        int movesSW = Math.min(Math.abs(row-Board.getRows())-1, col);
+        deltaRow = Math.abs(row - Board.getRows()) - 1;
+        int movesSW = Math.min(deltaRow, col);
         for (int moveSW = 1; moveSW <= movesSW; moveSW++) {
             int tempRow = row + moveSW;
             int tempCol = col - moveSW;
@@ -145,8 +165,14 @@ public class Queen extends Piece {
         return moves;
     }
 
+    /**
+     * Checks if coordinate is a possible capture position for the piece.
+     * @param destination coordinate
+     * @return true if coordinate is a possible capture location for the piece;
+     * false otherwise.
+     */
     @Override
-    public boolean hasPossibleCapture(Coordinate destination) {
+    public boolean hasPossibleCapture(final Coordinate destination) {
 
         Coordinate coordinate = this.getCoordinate();
         int row = coordinate.getRow();
@@ -185,8 +211,8 @@ public class Queen extends Piece {
         }
 
         //North East
-        int movesNE = Math.min(row, Math.abs(col-Board.getCols())-1);
-        for (int moveNE = 1; moveNE <= movesNE; moveNE++){
+        int movesNE = Math.min(row, Math.abs(col - Board.getCols()) - 1);
+        for (int moveNE = 1; moveNE <= movesNE; moveNE++) {
             int tempRow = row - moveNE;
             int tempCol = col + moveNE;
             Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
@@ -207,7 +233,9 @@ public class Queen extends Piece {
         }
 
         //South East
-        int movesSE = Math.min(Math.abs(row-Board.getRows())-1, Math.abs(col-Board.getCols())-1);
+        int deltaRow = Math.abs(row - Board.getRows()) - 1;
+        int deltaCol = Math.abs(col - Board.getCols()) - 1;
+        int movesSE = Math.min(deltaRow, deltaCol);
         for (int moveSE = 1; moveSE <= movesSE; moveSE++) {
             int tempRow = row + moveSE;
             int tempCol = col + moveSE;
@@ -218,47 +246,70 @@ public class Queen extends Piece {
         }
 
         //South West
-        int movesSW = Math.min(Math.abs(row-Board.getRows())-1, col);
+        deltaRow = Math.abs(row - Board.getRows()) - 1;
+        int movesSW = Math.min(deltaRow, col);
         for (int moveSW = 1; moveSW <= movesSW; moveSW++) {
             int tempRow = row + moveSW;
             int tempCol = col - moveSW;
             Coordinate tempCoordinate = new Coordinate(tempRow, tempCol);
-
             if (destination.equals(tempCoordinate)) {
                 return true;
             }
         }
-
         return false;
     }
 
+    /**
+     * Getter for piece image.
+     * @param side color of the piece
+     * @return BufferedImage of the image for current piece.
+     * @throws IOException image file not found
+     */
     @Override
-    public BufferedImage getImage(Side side) throws IOException {
+    public BufferedImage getImage(final Side side) throws IOException {
         if (side.equals(Side.White)) {
             return ImageIO.read(new File("src/main/resources/queen_white.png"));
         }
         return ImageIO.read(new File("src/main/resources/queen_black.png"));
     }
 
+    /**
+     * Makes a copy of the current piece.
+     * @return copy of current piece
+     */
     @Override
     public Piece copy() {
         return new Queen(this.getSide(), this.getCoordinate());
     }
 
+    /**
+     * String representation of the piece.
+     * @return string representation
+     */
     @Override
     public String toString() {
-        return getSide().toString() + " " + name;
+        return getSide().toString() + " " + NAME;
     }
 
+    /**
+     * Compares two objects for equality.
+     * @param obj objects being compared to
+     * @return true if equal; false otherwise.
+     */
     @Override
-    public boolean equals(Object obj) {
-        if (! (obj instanceof Queen)) {
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof Queen)) {
             return false;
         }
         Queen queen = (Queen) obj;
-        return (queen.getSide().equals(this.getSide())) && (queen.getCoordinate().equals(this.getCoordinate()));
+        return (queen.getSide().equals(this.getSide()))
+                && (queen.getCoordinate().equals(this.getCoordinate()));
     }
 
+    /**
+     * Getter for object's hashcode.
+     * @return hashcode
+     */
     @Override
     public int hashCode() {
         return hash(this.getCoordinate(), this.getSide());

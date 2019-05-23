@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="framework.core.Pieces.BishopTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-05-22T04:51:41" hostname="Albertos-MacBook-Air.local" time="0.002">
+<testsuite name="framework.core.Pieces.BishopTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-05-23T21:32:55" hostname="Albertos-MacBook-Air.local" time="0.001">
   <properties/>
   <testcase name="getPossibleMoves" classname="framework.core.Pieces.BishopTest" time="0.0"/>
-  <testcase name="string" classname="framework.core.Pieces.BishopTest" time="0.0"/>
+  <testcase name="string" classname="framework.core.Pieces.BishopTest" time="0.001"/>
   <testcase name="copy" classname="framework.core.Pieces.BishopTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

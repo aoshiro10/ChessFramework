@@ -16,28 +16,54 @@ import java.util.Map;
 
 import static java.util.Objects.hash;
 
+/**
+ * Object representing a rook piece.
+ */
 public class Rook extends Piece {
 
     private final String name = "Rook";
     private boolean initPos = false;
 
+    /**
+     * Constructor for the piece.
+     * @param side piece color
+     * @param coordinate location on the board
+     */
+    public Rook(final Side side, final Coordinate coordinate) {
+        super(side, coordinate);
+    }
+
+    /**
+     * Returns the NAME of the piece.
+     * @return NAME of the piece
+     */
     @Override
     public String getPieceName() {
         return name;
     }
 
-    public Rook(Side side, Coordinate coordinate) {
-        super(side, coordinate);
-    }
-
+    /**
+     * Getter for initPos value.
+     * @return initPos
+     */
     public boolean getInitPos() {
         return this.initPos;
     }
 
-    public void setInitPos(boolean initPos) {
+    /**
+     * Setter for initPos.
+     * @param initPos new value.
+     */
+    public void setInitPos(final boolean initPos) {
         this.initPos = initPos;
     }
 
+    /**
+     * Creates a map with all the possible move destinations.
+     * Each move destination is mapped from a direction.
+     * i.e. if the destination is a move east, it will be under the east key.
+     * @return map with directions mapping to destination coordinates
+     */
     @Override
     public Map<Direction, List<Coordinate>> getPossibleMoves() {
 
@@ -93,8 +119,14 @@ public class Rook extends Piece {
 
     }
 
+    /**
+     * Checks if coordinate is a possible capture position for the piece.
+     * @param destination coordinate
+     * @return true if coordinate is a possible capture location for the piece;
+     * false otherwise.
+     */
     @Override
-    public boolean hasPossibleCapture(Coordinate destination) {
+    public boolean hasPossibleCapture(final Coordinate destination) {
 
         Coordinate coordinate = this.getCoordinate();
         int row = coordinate.getRow();
@@ -134,6 +166,10 @@ public class Rook extends Piece {
         return false;
     }
 
+    /**
+     * Makes a copy of the current piece.
+     * @return copy of current piece
+     */
     @Override
     public Piece copy() {
         Rook rook = new Rook(getSide(), getCoordinate());
@@ -141,29 +177,51 @@ public class Rook extends Piece {
         return rook;
     }
 
+    /**
+     * String representation of the piece.
+     * @return string representation
+     */
     @Override
     public String toString() {
         return getSide().toString() + " " + name;
     }
 
+    /**
+     * Getter for piece image.
+     * @param side color of the piece
+     * @return BufferedImage of the image for current piece.
+     * @throws IOException image file not found
+     */
     @Override
-    public BufferedImage getImage(Side side) throws IOException {
+    public BufferedImage getImage(final Side side) throws IOException {
         if (side.equals(Side.White)) {
-            return ImageIO.read(new File("src/main/resources/rook_white.png"));
+            File file = new File("src/main/resources/rook_white.png");
+            return ImageIO.read(file);
         }
-        return ImageIO.read(new File("src/main/resources/rook_black.png"));
+        File file = new File("src/main/resources/rook_black.png");
+        return ImageIO.read(file);
     }
 
+    /**
+     * Compares two objects for equality.
+     * @param obj objects being compared to
+     * @return true if equal; false otherwise.
+     */
     @Override
-    public boolean equals(Object obj) {
-        if (! (obj instanceof Rook)) {
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof Rook)) {
             return false;
         }
         Rook rook = (Rook) obj;
-        return (rook.initPos == this.initPos) && (rook.getSide().equals(this.getSide()))
+        return (rook.initPos == this.initPos)
+                && (rook.getSide().equals(this.getSide()))
                 && (rook.getCoordinate().equals(this.getCoordinate()));
     }
 
+    /**
+     * Getter for object's hashcode.
+     * @return hashcode
+     */
     @Override
     public int hashCode() {
         return hash(this.getCoordinate(), this.getSide(), this.initPos);

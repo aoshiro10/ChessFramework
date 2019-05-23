@@ -2,10 +2,7 @@ package framework;
 
 import framework.core.Chess;
 import framework.core.Player;
-import framework.core.Side;
 import framework.gui.GUI;
-import plugin.AlphaBeta;
-import plugin.MinMax;
 
 import javax.swing.*;
 
