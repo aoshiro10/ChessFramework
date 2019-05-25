@@ -30,7 +30,7 @@ Return: from the list of available moves from the current chess state, return a 
 
 Observation: 'Board' has a method 'getValidMoves(final Side side)' that takes a 'Side' and returns a list of valid moves for the current side.
 
-## Installing the plugin
+## Installing new plugin
 
 Make sure you implement the [`Player`](https://github.com/aoshiro10/chess-framework/blob/master/src/main/java/framework/core/Player.java).
 
