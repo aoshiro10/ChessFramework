@@ -22,7 +22,7 @@ The [`Player`](https://github.com/aoshiro10/chess-framework/blob/master/src/main
 
 Return: side (white or black) of the player the plugin is controlling : [`Side`](https://github.com/aoshiro10/chess-framework/blob/master/src/main/java/framework/core/Side.java)
 
-#### `chooseMove(Board board)`:
+#### `chooseMove()`:
 
 Parameter: board represting the current state of the game : [`Board`](https://github.com/aoshiro10/chess-framework/blob/master/src/main/java/framework/core/Board.java)
 
